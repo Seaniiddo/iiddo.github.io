@@ -5,404 +5,350 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Iiddo - AI Mental Wellness Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif'],
-                    },
-                    colors: {
-                        nobel: { gold: '#C5A059', cream: '#FFF9F0', dark: '#2D3436' }
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
     <style>
         html { scroll-behavior: smooth; scroll-padding-top: 100px; }
-        body { background-color: #FFF9F0; color: #2D3436; }
+        body { background-color: #FFF9F0; color: #2D3436; font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
-        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
-        .animate-fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
-        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        .animate-ping { animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+        .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
     </style>
-    <script type="importmap">
-    {
-        "imports": {
-            "react": "https://aistudiocdn.com/react@^19.2.0",
-            "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-            "@react-three/fiber": "https://aistudiocdn.com/@react-three/fiber@^9.4.0",
-            "@react-three/drei": "https://aistudiocdn.com/@react-three/drei@^10.7.7",
-            "three": "https://aistudiocdn.com/three@^0.181.1",
-            "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
-            "lucide-react": "https://aistudiocdn.com/lucide-react@^0.553.0"
-        }
-    }
-    </script>
 </head>
 <body>
-    <div id="root"></div>
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
-        const { Canvas, useFrame } = React;
-        const { Float, MeshDistortMaterial, Sphere, Torus, Cylinder, Stars, Environment, Box } = React;
-        const { motion } = window['framer-motion'] || {};
-        const { Activity, Cpu, BarChart2, ArrowDown, Menu, X, Zap } = window['lucide-react'] || {};
-
-        const QuantumParticle = ({ position, color, scale = 1 }) => {
-            const ref = useRef();
-            useFrame((state) => {
-                if (ref.current) {
-                    const t = state.clock.getElapsedTime();
-                    ref.current.position.y = position[1] + Math.sin(t * 2 + position[0]) * 0.2;
-                    ref.current.rotation.x = t * 0.5;
-                    ref.current.rotation.z = t * 0.3;
-                }
-            });
-            return (
-                <Sphere ref={ref} args={[1, 32, 32]} position={position} scale={scale}>
-                    <MeshDistortMaterial color={color} envMapIntensity={1} clearcoat={1} clearcoatRoughness={0} metalness={0.5} distort={0.4} speed={2} />
-                </Sphere>
-            );
-        };
-
-        const MacroscopicWave = () => {
-            const ref = useRef();
-            useFrame((state) => {
-                if (ref.current) {
-                    const t = state.clock.getElapsedTime();
-                    ref.current.rotation.x = Math.sin(t * 0.2) * 0.2;
-                    ref.current.rotation.y = t * 0.1;
-                }
-            });
-            return (
-                <Torus ref={ref} args={[3, 0.1, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
-                    <meshStandardMaterial color="#C5A059" emissive="#C5A059" emissiveIntensity={0.5} transparent opacity={0.6} wireframe />
-                </Torus>
-            );
-        };
-
-        const HeroScene = () => (
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-                    <ambientLight intensity={0.5} />
-                    <pointLight position={[10, 10, 10]} intensity={1} />
-                    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
-                        <QuantumParticle position={[0, 0, 0]} color="#4F46E5" scale={1.2} />
-                        <MacroscopicWave />
-                    </Float>
-                    <Float speed={2} rotationIntensity={0.5} floatIntensity={1}>
-                        <QuantumParticle position={[-3, 1, -2]} color="#9333EA" scale={0.5} />
-                        <QuantumParticle position={[3, -1, -3]} color="#C5A059" scale={0.6} />
-                    </Float>
-                    <Environment preset="city" />
-                    <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
-                </Canvas>
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-6">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-white font-serif font-bold text-xl pb-1 shadow-lg">i</div>
+                <span class="font-serif font-bold text-xl tracking-wide text-stone-800">iiddo</span>
             </div>
-        );
-
-        const QuantumComputerScene = () => (
-            <div className="w-full h-full absolute inset-0">
-                <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }}>
-                    <ambientLight intensity={1} />
-                    <spotLight position={[5, 5, 5]} angle={0.3} penumbra={1} intensity={2} color="#C5A059" />
-                    <pointLight position={[-5, -5, -5]} intensity={0.5} />
-                    <Environment preset="studio" />
-                    <Float rotationIntensity={0.4} floatIntensity={0.2} speed={1}>
-                        <group rotation={[0, 0, 0]} position={[0, 0.5, 0]}>
-                            <Cylinder args={[1.2, 1.2, 0.1, 64]} position={[0, 1, 0]}>
-                                <meshStandardMaterial color="#C5A059" metalness={1} roughness={0.15} />
-                            </Cylinder>
-                            <Cylinder args={[1, 1, 0.1, 64]} position={[0, 0.2, 0]}>
-                                <meshStandardMaterial color="#C5A059" metalness={1} roughness={0.15} />
-                            </Cylinder>
-                            <Cylinder args={[0.6, 0.6, 0.1, 64]} position={[0, -0.6, 0]}>
-                                <meshStandardMaterial color="#C5A059" metalness={1} roughness={0.15} />
-                            </Cylinder>
-                            {[0.5, -0.5, 0].map((x, i) => (
-                                <Cylinder key={i} args={[0.04, 0.04, 0.8, 16]} position={[x, 0.6, 0]}>
-                                    <meshStandardMaterial color="#D1D5DB" metalness={0.8} roughness={0.2} />
-                                </Cylinder>
-                            ))}
-                            {[0.2, -0.2].map((x, i) => (
-                                <Cylinder key={i} args={[0.03, 0.03, 0.8, 16]} position={[x, -0.2, 0]}>
-                                    <meshStandardMaterial color="#D1D5DB" metalness={0.8} roughness={0.2} />
-                                </Cylinder>
-                            ))}
-                            <Torus args={[0.7, 0.015, 16, 64]} position={[0, -0.2, 0]} rotation={[Math.PI/2, 0, 0]}>
-                                <meshStandardMaterial color="#B87333" metalness={0.8} roughness={0.3} />
-                            </Torus>
-                            <Torus args={[0.3, 0.015, 16, 64]} position={[0, -1, 0]} rotation={[Math.PI/2, 0, 0]}>
-                                <meshStandardMaterial color="#B87333" metalness={0.8} roughness={0.3} />
-                            </Torus>
-                            <Box args={[0.2, 0.05, 0.2]} position={[0, -0.7, 0]}>
-                                <meshStandardMaterial color="#111" metalness={0.9} roughness={0.1} />
-                            </Box>
-                        </group>
-                    </Float>
-                </Canvas>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-stone-600">
+                <a href="#features" class="hover:text-[#FF6B35] transition-colors">Features</a>
+                <a href="#safety" class="hover:text-[#FF6B35] transition-colors">Safety</a>
+                <a href="#parents" class="hover:text-[#FF6B35] transition-colors">Parents</a>
+                <a href="#get-started" class="px-5 py-2 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full hover:shadow-lg transition-all">Get Started</a>
             </div>
-        );
+        </div>
+    </nav>
 
-        const SurfaceCodeDiagram = () => {
-            const [errors, setErrors] = useState([0]);
-            const toggleError = (id) => {
-                setErrors(prev => prev.includes(id) ? prev.filter(e => e !== id) : [...prev, id]);
-            };
-            return (
-                <div className="flex flex-col items-center p-8 bg-white rounded-xl shadow-sm border border-stone-200 my-8">
-                    <h3 className="font-serif text-xl mb-4 text-stone-800">Visualizing Component Interactivity</h3>
-                    <div className="relative w-64 h-64 bg-[#F5F4F0] rounded-lg border border-stone-200 p-4 flex flex-wrap justify-between content-between relative">
-                        <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-20">
-                            <div className="w-2/3 h-2/3 border border-stone-400"></div>
-                            <div className="absolute w-full h-[1px] bg-stone-400"></div>
-                            <div className="absolute h-full w-[1px] bg-stone-400"></div>
-                        </div>
-                        {[{id: 0, x: '50%', y: '20%', color: 'bg-blue-500'}, {id: 1, x: '20%', y: '50%', color: 'bg-red-500'}, {id: 2, x: '80%', y: '50%', color: 'bg-red-500'}, {id: 3, x: '50%', y: '80%', color: 'bg-blue-500'}].map(stab => (
-                            <motion.div key={`stab-${stab.id}`} className={`absolute w-10 h-10 -ml-5 -mt-5 flex items-center justify-center text-white text-[8px] font-bold rounded-sm transition-all duration-300 ${errors.length > 0 ? stab.color + ' opacity-100 scale-110 ring-4 ring-offset-2 ring-stone-200' : 'bg-stone-300 opacity-40'}`} style={{ left: stab.x, top: stab.y }}>
-                                LOGIC
-                            </motion.div>
-                        ))}
-                        {[{id: 0, x: '20%', y: '20%'}, {id: 1, x: '80%', y: '20%'}, {id: 4, x: '50%', y: '50%'}, {id: 2, x: '20%', y: '80%'}, {id: 3, x: '80%', y: '80%'}].map(q => (
-                            <button key={`data-${q.id}`} onClick={() => toggleError(q.id)} className={`absolute w-8 h-8 -ml-4 -mt-4 rounded-full border-2 flex items-center justify-center transition-all duration-200 z-10 ${errors.includes(q.id) ? 'bg-stone-800 border-stone-900 text-nobel-gold' : 'bg-white border-stone-300 hover:border-stone-500'}`} style={{ left: q.x, top: q.y }}>
-                                {errors.includes(q.id) && <Activity size={14} />}
-                            </button>
-                        ))}
-                    </div>
-                    <div className="mt-6 flex items-center gap-4 text-xs font-mono text-stone-500">
-                        <div className="flex items-center gap-1"><div className="w-3 h-3 rounded-full bg-stone-800"></div> Trigger</div>
-                        <div className="flex items-center gap-1"><div className="w-3 h-3 rounded-sm bg-red-500"></div> Logic</div>
-                    </div>
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <canvas id="hero-canvas" class="absolute inset-0 z-0"></canvas>
+        <div class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,249,240,0.95)_0%,rgba(255,249,240,0.7)_50%,rgba(255,249,240,0.4)_100%)]"></div>
+        <div class="relative z-10 container mx-auto px-6 text-center">
+            <div class="inline-block mb-4 px-4 py-2 border border-[#C5A059] text-[#C5A059] text-xs tracking-[0.2em] uppercase font-bold rounded-full bg-white/50 backdrop-blur-sm animate-fade-in">AI Mental Wellness Companion</div>
+            <h1 class="font-serif text-5xl md:text-7xl font-medium leading-tight text-stone-900 mb-6 animate-fade-in-up">iiddo<span class="block italic font-normal text-stone-500 text-2xl md:text-4xl mt-4">Always Here to Listen</span></h1>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-stone-600 font-light leading-relaxed mb-10 animate-fade-in-up" style="animation-delay:0.2s;">The AI-powered mental wellness companion designed exclusively for ages 8-16. Available 24/7, always ready to listen, understand, and support.</p>
+            <div class="flex justify-center gap-4 flex-wrap animate-fade-in-up" style="animation-delay:0.3s;">
+                <a href="#get-started" class="px-8 py-4 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full font-medium hover:shadow-xl transition-all">Start Free Trial</a>
+                <a href="#features" class="px-8 py-4 bg-white text-stone-700 rounded-full font-medium border border-stone-200 hover:border-[#C5A059] transition-all">Learn More</a>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-fade-in" style="animation-delay:0.5s;">
+            <a href="#features" class="flex flex-col items-center gap-2 text-sm font-medium text-stone-400 hover:text-stone-600 transition-colors"><span>EXPLORE</span><span class="p-2 border border-stone-300 rounded-full bg-white/50">↓</span></a>
+        </div>
+    </header>
+
+    <section id="features" class="py-24 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-3 text-xs font-bold tracking-widest text-stone-500 uppercase">Core Features</div>
+                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Why Choose Iiddo?</h2>
+                <p class="text-lg text-stone-600 max-w-2xl mx-auto">Built specifically for young minds, with safety, empathy, and growth at the heart of everything we do.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
+                    <div class="text-4xl mb-4">🗣️</div>
+                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Always-On AI Companion</h3>
+                    <p class="text-stone-600 leading-relaxed">Our intelligent AI listens without judgment, offers empathy, and provides guidance whenever your child needs it.</p>
                 </div>
-            );
-        };
-
-        const PerformanceMetricDiagram = () => {
-            const [view, setView] = useState('Speed');
-            const data = { 'Speed': { standard: 65, iiddo: 98 }, 'Size': { standard: 85, iiddo: 30 }, 'Quality': { standard: 70, iiddo: 99 } };
-            const currentData = data[view];
-            const maxVal = 100;
-            return (
-                <div className="flex flex-col md:flex-row gap-8 items-center p-8 bg-stone-900 text-stone-100 rounded-xl my-8 border border-stone-800 shadow-lg">
-                    <div className="flex-1 min-w-[240px]">
-                        <h3 className="font-serif text-xl mb-2 text-nobel-gold">Optimization Metrics</h3>
-                        <p className="text-stone-400 text-sm mb-4 leading-relaxed">Benchmarking IIDDO's optimized delivery against legacy web development standards.</p>
-                        <div className="flex gap-2 mt-6">
-                            {['Speed', 'Size', 'Quality'].map((d) => (
-                                <button key={d} onClick={() => setView(d)} className={`px-3 py-1.5 rounded text-sm font-medium transition-all duration-200 border ${view === d ? 'bg-nobel-gold text-stone-900 border-nobel-gold' : 'bg-transparent text-stone-400 border-stone-700'}`}>{d}</button>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="relative w-64 h-72 bg-stone-800/50 rounded-xl border border-stone-700/50 p-6 flex justify-around items-end">
-                        <div className="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none opacity-10">
-                            <div className="w-full h-[1px] bg-stone-400"></div>
-                            <div className="w-full h-[1px] bg-stone-400"></div>
-                            <div className="w-full h-[1px] bg-stone-400"></div>
-                        </div>
-                        <div className="w-20 flex flex-col justify-end items-center h-full z-10">
-                            <div className="flex-1 w-full flex items-end justify-center relative mb-3">
-                                <div className="absolute -top-5 w-full text-center text-sm font-mono text-stone-400 font-bold bg-stone-900/90 py-1 px-2 rounded">{view === 'Size' ? 'High' : currentData.standard + '%'}</div>
-                                <motion.div className="w-full bg-stone-600 rounded-t-md" initial={{ height: 0 }} animate={{ height: `${(currentData.standard / maxVal) * 100}%` }} transition={{ type: "spring", stiffness: 80, damping: 15 }} />
-                            </div>
-                            <div className="h-6 flex items-center text-[10px] font-bold text-stone-500 uppercase tracking-wider">Legacy</div>
-                        </div>
-                        <div className="w-20 flex flex-col justify-end items-center h-full z-10">
-                            <div className="flex-1 w-full flex items-end justify-center relative mb-3">
-                                <div className="absolute -top-5 w-full text-center text-sm font-mono text-nobel-gold font-bold bg-stone-900/90 py-1 px-2 rounded">{view === 'Size' ? 'Optimized' : currentData.iiddo + '%'}</div>
-                                <motion.div className="w-full bg-nobel-gold rounded-t-md relative overflow-hidden" initial={{ height: 0 }} animate={{ height: Math.max(1, (view === 'Size' ? 95 : (currentData.iiddo / maxVal) * 100)) + '%' }} transition={{ type: "spring", stiffness: 80, damping: 15, delay: 0.1 }}>
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent to-white/20"></div>
-                                </motion.div>
-                            </div>
-                            <div className="h-6 flex items-center text-[10px] font-bold text-nobel-gold uppercase tracking-wider">IIDDO</div>
-                        </div>
-                    </div>
+                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
+                    <div class="text-4xl mb-4">🎮</div>
+                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Gamified Learning</h3>
+                    <p class="text-stone-600 leading-relaxed">Engaging activities, rewards, and interactive stories that make emotional learning fun and accessible.</p>
                 </div>
-            );
-        };
-
-        const App = () => {
-            const [scrolled, setScrolled] = useState(false);
-            useEffect(() => {
-                const handleScroll = () => setScrolled(window.scrollY > 50);
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-            return (
-                <div className="min-h-screen bg-[#FFF9F0] text-stone-800">
-                    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#FFF9F0]/90 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'}`}>
-                        <div className="container mx-auto px-6 flex justify-between items-center">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-nobel-gold rounded-full flex items-center justify-center text-white font-serif font-bold text-xl pb-1">i</div>
-                                <span className="font-serif font-bold text-xl tracking-wide"><span className="text-nobel-gold">iiddo</span></span>
-                            </div>
-                            <div className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-stone-600">
-                                <a href="#features" className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Features</a>
-                                <a href="#safety" className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Safety</a>
-                                <a href="#parents" className="hover:text-nobel-gold transition-colors cursor-pointer uppercase">Parents</a>
-                                <a href="#get-started" className="px-5 py-2 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full hover:shadow-lg transition-all cursor-pointer">Get Started</a>
-                            </div>
-                        </div>
-                    </nav>
-
-                    <header className="relative h-screen flex items-center justify-center overflow-hidden">
-                        <HeroScene />
-                        <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,249,240,0.95)_0%,rgba(255,249,240,0.6)_50%,rgba(255,249,240,0.3)_100%)]" />
-                        <div className="relative z-10 container mx-auto px-6 text-center">
-                            <div className="inline-block mb-4 px-3 py-1 border border-nobel-gold text-nobel-gold text-xs tracking-[0.2em] uppercase font-bold rounded-full backdrop-blur-sm bg-white/30">AI Mental Wellness Companion</div>
-                            <h1 className="font-serif text-5xl md:text-7xl font-medium leading-tight mb-8 text-stone-900">iiddo<span className="italic font-normal text-stone-500 text-2xl md:text-4xl block mt-4">Always Here to Listen</span></h1>
-                            <p className="max-w-2xl mx-auto text-lg md:text-xl text-stone-600 font-light leading-relaxed mb-12">The AI-powered mental wellness companion designed exclusively for ages 8-16. Available 24/7, always ready to listen, understand, and support.</p>
-                            <div className="flex justify-center gap-4 flex-wrap">
-                                <a href="#get-started" className="px-8 py-4 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full font-medium hover:shadow-lg transition-all cursor-pointer">Start Free Trial</a>
-                                <a href="#features" className="px-8 py-4 bg-white text-stone-700 rounded-full font-medium border border-stone-200 hover:border-nobel-gold transition-all cursor-pointer">Learn More</a>
-                            </div>
-                        </div>
-                    </header>
-
-                    <section id="features" className="py-24 bg-white">
-                        <div className="container mx-auto px-6">
-                            <div className="text-center mb-16">
-                                <div className="inline-block mb-3 text-xs font-bold tracking-widest text-stone-500 uppercase">Core Features</div>
-                                <h2 className="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Why Choose Iiddo?</h2>
-                                <p className="text-lg text-stone-600 max-w-2xl mx-auto">Built specifically for young minds, with safety, empathy, and growth at the heart of everything we do.</p>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {[
-                                    { icon: '🗣️', title: 'Always-On AI Companion', desc: 'Our intelligent AI listens without judgment, offers empathy, and provides guidance whenever your child needs it.' },
-                                    { icon: '🎮', title: 'Gamified Learning', desc: 'Engaging activities, rewards, and interactive stories that make emotional learning fun and accessible.' },
-                                    { icon: '🛡️', title: 'Advanced Safety Net', desc: 'Real-time crisis detection with immediate professional intervention protocols.' },
-                                    { icon: '👨‍👩‍👧', title: 'Parent Dashboard', desc: 'Empower parents with insights, resources, and tools to support their child\'s emotional development.' },
-                                    { icon: '📊', title: 'Progress Tracking', desc: 'Visualize emotional growth over time with intuitive charts and personalized insights.' },
-                                    { icon: '🌍', title: 'Multilingual Support', desc: 'Breaking language barriers with support for English and Chinese.' }
-                                ].map((feature, i) => (
-                                    <div key={i} className="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-nobel-gold/30 hover:shadow-lg transition-all duration-300">
-                                        <div className="text-4xl mb-4">{feature.icon}</div>
-                                        <h3 className="font-serif text-xl font-medium text-stone-900 mb-3">{feature.title}</h3>
-                                        <p className="text-stone-600 leading-relaxed">{feature.desc}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="py-24 bg-[#FFF9F0]">
-                        <div className="container mx-auto px-6">
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                                <div>
-                                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-stone-100 text-stone-600 text-xs font-bold tracking-widest uppercase rounded-full mb-6 border border-stone-200"><Zap size={14}/> CORE COMPETENCIES</div>
-                                    <h2 className="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Interactive Logic</h2>
-                                    <p className="text-lg text-stone-600 mb-6 leading-relaxed">In every interaction, we treat the user experience as a living system. From reactive emotional recognition to real-time wellness insights, the objective is always clarity and support.</p>
-                                    <p className="text-lg text-stone-600 leading-relaxed">Our expertise spans across child psychology and AI engineering, with a particular focus on creating safe, accessible, and engaging experiences for young minds.</p>
-                                </div>
-                                <SurfaceCodeDiagram />
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="safety" className="py-24 bg-white">
-                        <div className="container mx-auto px-6">
-                            <div className="text-center mb-16">
-                                <h2 className="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Safety Is Our Foundation</h2>
-                                <p className="text-lg text-stone-600 max-w-2xl mx-auto">We go above and beyond to ensure every interaction is safe, secure, and supportive.</p>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                                {[
-                                    { icon: '🛡️', title: 'Crisis Detection', desc: 'Advanced AI detects signs of distress and immediately connects users with professional help resources.' },
-                                    { icon: '🔒', title: 'Data Privacy', desc: 'Enterprise-grade encryption and strict data policies. We never sell or share personal information.' },
-                                    { icon: '👨‍👩‍👧', title: 'Parent Controls', desc: 'Granular privacy settings allow parents to customize the experience while respecting their child\'s autonomy.' },
-                                    { icon: '✅', title: 'Human Oversight', desc: 'Regular content reviews by child psychology experts ensure our AI always provides age-appropriate guidance.' }
-                                ].map((item, i) => (
-                                    <div key={i} className="text-center p-6">
-                                        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">{item.icon}</div>
-                                        <h3 className="font-serif text-lg font-medium text-stone-900 mb-2">{item.title}</h3>
-                                        <p className="text-stone-600 text-sm leading-relaxed">{item.desc}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    <section className="py-24 bg-[#FFF9F0]">
-                        <div className="container mx-auto px-6">
-                            <div className="text-center mb-16">
-                                <h2 className="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Efficiency and Scalability</h2>
-                                <p className="text-lg text-stone-600 max-w-2xl mx-auto">Performance is a feature. Our solutions are built to scale, ensuring smooth and responsive experiences for all users.</p>
-                            </div>
-                            <PerformanceMetricDiagram />
-                        </div>
-                    </section>
-
-                    <section id="parents" className="py-24 bg-white border-t border-stone-200">
-                        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12">
-                            <div className="md:col-span-5 relative">
-                                <div className="aspect-square bg-[#F5F4F0] rounded-xl overflow-hidden relative border border-stone-200 shadow-inner">
-                                    <QuantumComputerScene />
-                                    <div className="absolute bottom-4 left-0 right-0 text-center text-xs text-stone-400 font-serif italic">AI Companion Simulation</div>
-                                </div>
-                            </div>
-                            <div className="md:col-span-7 flex flex-col justify-center">
-                                <div className="inline-block mb-3 text-xs font-bold tracking-widest text-stone-500 uppercase">FOR PARENTS</div>
-                                <h2 className="font-serif text-4xl mb-6 text-stone-900">Be Part of Their Journey</h2>
-                                <p className="text-lg text-stone-600 mb-6 leading-relaxed">Parenting in the digital age is challenging. Iiddo empowers you with tools, resources, and insights to support your child's mental wellness.</p>
-                                <ul className="space-y-4 mb-8">
-                                    {[
-                                        'Dashboard showing emotional trends (with child\'s consent)',
-                                        'Expert resources on adolescent development',
-                                        'Conversation starters and family activities',
-                                        'Access to professional counseling referrals',
-                                        'Community support from other parents'
-                                    ].map((item, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-stone-600">
-                                            <span className="w-6 h-6 bg-nobel-gold/20 rounded-full flex items-center justify-center text-nobel-gold text-sm">✓</span>
-                                            {item}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="get-started" className="py-24 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] text-white">
-                        <div className="container mx-auto px-6 text-center">
-                            <h2 className="font-serif text-4xl md:text-5xl mb-6">Ready to Start the Conversation?</h2>
-                            <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Join thousands of families who have found a trusted companion for their children's mental wellness journey.</p>
-                            <div className="flex justify-center gap-4 flex-wrap">
-                                <a href="#" className="px-8 py-4 bg-white text-[#FF6B35] rounded-full font-medium hover:shadow-xl transition-all cursor-pointer">Get Started Free</a>
-                                <a href="#" className="px-8 py-4 bg-white/20 text-white rounded-full font-medium border border-white/40 hover:bg-white/30 transition-all cursor-pointer">Contact Us</a>
-                            </div>
-                        </div>
-                    </section>
-
-                    <footer className="bg-stone-900 text-stone-400 py-16">
-                        <div className="container mx-auto px-6">
-                            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-                                <div className="text-center md:text-left">
-                                    <div className="text-white font-serif font-bold text-2xl mb-2"><span className="text-nobel-gold">iiddo</span></div>
-                                    <p className="text-sm">AI-Powered Mental Wellness for Young Minds</p>
-                                </div>
-                                <div className="flex gap-8 text-sm">
-                                    <a href="#" className="hover:text-nobel-gold transition-colors">Privacy</a>
-                                    <a href="#" className="hover:text-nobel-gold transition-colors">Terms</a>
-                                    <a href="#" className="hover:text-nobel-gold transition-colors">Contact</a>
-                                </div>
-                            </div>
-                            <div className="text-center mt-12 text-xs text-stone-600">© 2025 Iiddo. All rights reserved.</div>
-                        </div>
-                    </footer>
+                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Advanced Safety Net</h3>
+                    <p class="text-stone-600 leading-relaxed">Real-time crisis detection with immediate professional intervention protocols.</p>
                 </div>
-            );
-        };
+                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
+                    <div class="text-4xl mb-4">👨‍👩‍👧</div>
+                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Parent Dashboard</h3>
+                    <p class="text-stone-600 leading-relaxed">Empower parents with insights, resources, and tools to support their child's emotional development.</p>
+                </div>
+                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Progress Tracking</h3>
+                    <p class="text-stone-600 leading-relaxed">Visualize emotional growth over time with intuitive charts and personalized insights.</p>
+                </div>
+                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
+                    <div class="text-4xl mb-4">🌍</div>
+                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Multilingual Support</h3>
+                    <p class="text-stone-600 leading-relaxed">Breaking language barriers with support for English and Chinese.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+    <section id="safety" class="py-24 bg-[#FFF9F0]">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Safety Is Our Foundation</h2>
+                <p class="text-lg text-stone-600 max-w-2xl mx-auto">We go above and beyond to ensure every interaction is safe, secure, and supportive.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">🛡️</div>
+                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Crisis Detection</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Advanced AI detects signs of distress and immediately connects users with professional help.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">🔒</div>
+                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Data Privacy</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Enterprise-grade encryption. We never sell or share personal information.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">👨‍👩‍👧</div>
+                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Parent Controls</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Granular privacy settings respecting child's autonomy while giving parents peace of mind.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">✅</div>
+                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Human Oversight</h3>
+                    <p class="text-stone-600 text-sm leading-relaxed">Regular content reviews by child psychology experts ensure age-appropriate guidance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="parents" class="py-24 bg-white border-t border-stone-200">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <div class="aspect-square bg-[#F5F4F0] rounded-xl overflow-hidden relative border border-stone-200 shadow-inner">
+                    <canvas id="quantum-canvas" class="w-full h-full"></canvas>
+                    <div class="absolute bottom-4 left-0 right-0 text-center text-xs text-stone-400 font-serif italic">AI Companion Simulation</div>
+                </div>
+            </div>
+            <div>
+                <div class="inline-block mb-3 text-xs font-bold tracking-widest text-stone-500 uppercase">For Parents</div>
+                <h2 class="font-serif text-4xl mb-6 text-stone-900">Be Part of Their Journey</h2>
+                <p class="text-lg text-stone-600 mb-6 leading-relaxed">Parenting in the digital age is challenging. Iiddo empowers you with tools, resources, and insights to support your child's mental wellness.</p>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Dashboard showing emotional trends (with child's consent)</li>
+                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Expert resources on adolescent development</li>
+                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Conversation starters and family activities</li>
+                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Access to professional counseling referrals</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="get-started" class="py-24 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="font-serif text-4xl md:text-5xl mb-6">Ready to Start the Conversation?</h2>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Join thousands of families who have found a trusted companion for their children's mental wellness journey.</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="#" class="px-8 py-4 bg-white text-[#FF6B35] rounded-full font-medium hover:shadow-xl transition-all">Get Started Free</a>
+                <a href="#" class="px-8 py-4 bg-white/20 text-white rounded-full font-medium border border-white/40 hover:bg-white/30 transition-all">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-stone-900 text-stone-400 py-16">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="text-center md:text-left">
+                    <div class="text-white font-serif font-bold text-2xl mb-2"><span class="text-[#C5A059]">iiddo</span></div>
+                    <p class="text-sm">AI-Powered Mental Wellness for Young Minds</p>
+                </div>
+                <div class="flex gap-8 text-sm">
+                    <a href="#" class="hover:text-[#C5A059] transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-[#C5A059] transition-colors">Terms</a>
+                    <a href="#" class="hover:text-[#C5A059] transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="text-center mt-12 text-xs text-stone-600">© 2025 Iiddo. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.remove('bg-transparent', 'py-6');
+                navbar.classList.add('bg-[#FFF9F0]/95', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+            } else {
+                navbar.classList.add('bg-transparent', 'py-6');
+                navbar.classList.remove('bg-[#FFF9F0]/95', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+            }
+        });
+
+        function initHeroScene() {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 6;
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 1);
+            pointLight.position.set(10, 10, 10);
+            scene.add(pointLight);
+            
+            // Purple sphere
+            const sphereGeometry = new THREE.SphereGeometry(1.2, 64, 64);
+            const sphereMaterial = new THREE.MeshPhysicalMaterial({ color: 0x4F46E5, metalness: 0.1, roughness: 0.3, transparent: true, opacity: 0.85, clearcoat: 1, emissive: 0x4F46E5, emissiveIntensity: 0.15 });
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            const positions = sphereGeometry.attributes.position;
+            for (let i = 0; i < positions.count; i++) {
+                positions.setXYZ(i, positions.getX(i) + (Math.random() - 0.5) * 0.15, positions.getY(i) + (Math.random() - 0.5) * 0.15, positions.getZ(i) + (Math.random() - 0.5) * 0.15);
+            }
+            sphereGeometry.computeVertexNormals();
+            scene.add(sphere);
+            
+            // Torus rings
+            const torusGeometry = new THREE.TorusGeometry(2.5, 0.06, 16, 100);
+            const torusMaterial = new THREE.MeshStandardMaterial({ color: 0xC5A059, emissive: 0xC5A059, emissiveIntensity: 0.5, transparent: true, opacity: 0.6, wireframe: true });
+            const torus1 = new THREE.Mesh(torusGeometry, torusMaterial);
+            const torus2 = new THREE.Mesh(torusGeometry, torusMaterial);
+            const torus3 = new THREE.Mesh(torusGeometry, torusMaterial);
+            torus1.rotation.x = Math.PI / 2;
+            torus2.rotation.x = Math.PI / 3;
+            torus3.rotation.x = Math.PI / 1.5;
+            scene.add(torus1);
+            scene.add(torus2);
+            scene.add(torus3);
+            
+            // Small spheres
+            const sphere2Geometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const sphere2Material = new THREE.MeshPhysicalMaterial({ color: 0x9333EA, metalness: 0.1, roughness: 0.3, transparent: true, opacity: 0.85, clearcoat: 1, emissive: 0x9333EA, emissiveIntensity: 0.15 });
+            const sphere2 = new THREE.Mesh(sphere2Geometry, sphere2Material);
+            sphere2.position.set(-3, 1, -2);
+            scene.add(sphere2);
+            
+            const sphere3Geometry = new THREE.SphereGeometry(0.6, 32, 32);
+            const sphere3Material = new THREE.MeshPhysicalMaterial({ color: 0xC5A059, metalness: 0.1, roughness: 0.3, transparent: true, opacity: 0.85, clearcoat: 1, emissive: 0xC5A059, emissiveIntensity: 0.15 });
+            const sphere3 = new THREE.Mesh(sphere3Geometry, sphere3Material);
+            sphere3.position.set(3, -1, -3);
+            scene.add(sphere3);
+            
+            // Stars
+            const starsGeometry = new THREE.BufferGeometry();
+            const starCount = 1000;
+            const starPositions = new Float32Array(starCount * 3);
+            for (let i = 0; i < starCount * 3; i++) {
+                starPositions[i] = (Math.random() - 0.5) * 200;
+            }
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.3 });
+            const stars = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(stars);
+            
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.016;
+                const breathe = 1 + Math.sin(time * 1.5) * 0.05;
+                sphere.scale.set(breathe, breathe, breathe);
+                sphere2.scale.set(breathe, breathe, breathe);
+                sphere3.scale.set(breathe, breathe, breathe);
+                torus1.rotation.z = time * 0.3;
+                torus2.rotation.z = time * -0.2;
+                torus3.rotation.z = time * 0.25;
+                sphere2.position.y = 1 + Math.sin(time * 2 - 3) * 0.2;
+                sphere2.position.x = -3 + Math.sin(time * 2) * 0.1;
+                sphere3.position.y = -1 + Math.sin(time * 2 + 3) * 0.2;
+                sphere3.position.x = 3 + Math.sin(time * 2) * 0.1;
+                sphere.rotation.x = time * 0.5;
+                sphere.rotation.z = time * 0.3;
+                stars.rotation.y += 0.001;
+                renderer.render(scene, camera);
+            }
+            animate();
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function initQuantumScene() {
+            const canvas = document.getElementById('quantum-canvas');
+            if (!canvas) return;
+            const container = canvas.parentElement;
+            const size = Math.min(container.clientWidth, container.clientHeight);
+            canvas.width = size * 2;
+            canvas.height = size * 2;
+            canvas.style.width = size + 'px';
+            canvas.style.height = size + 'px';
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+            camera.position.z = 5;
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(size * 2, size * 2);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            scene.add(new THREE.AmbientLight(0xffffff, 1));
+            const spotLight = new THREE.SpotLight(0xC5A059, 2);
+            spotLight.position.set(5, 5, 5);
+            spotLight.angle = 0.3;
+            spotLight.penumbra = 1;
+            scene.add(spotLight);
+            const group = new THREE.Group();
+            const plateMaterial = new THREE.MeshStandardMaterial({ color: 0xC5A059, metalness: 1, roughness: 0.15 });
+            const plateGeometry = new THREE.CylinderGeometry(1.2, 1.2, 0.1, 64);
+            const topPlate = new THREE.Mesh(plateGeometry, plateMaterial);
+            topPlate.position.y = 1;
+            group.add(topPlate);
+            const middlePlate = new THREE.Mesh(plateGeometry, plateMaterial);
+            middlePlate.scale.set(0.83, 1, 0.83);
+            middlePlate.position.y = 0.2;
+            group.add(middlePlate);
+            const bottomPlate = new THREE.Mesh(plateGeometry, plateMaterial);
+            bottomPlate.scale.set(0.5, 1, 0.5);
+            bottomPlate.position.y = -0.6;
+            group.add(bottomPlate);
+            const rodMaterial = new THREE.MeshStandardMaterial({ color: 0xD1D5DB, metalness: 0.8, roughness: 0.2 });
+            const rodGeometry = new THREE.CylinderGeometry(0.04, 0.04, 0.8, 16);
+            [-0.5, 0.5, 0].forEach(x => {
+                const rod = new THREE.Mesh(rodGeometry, rodMaterial);
+                rod.position.set(x, 0.6, 0);
+                group.add(rod);
+            });
+            const coilMaterial = new THREE.MeshStandardMaterial({ color: 0xB87333, metalness: 0.8, roughness: 0.3 });
+            const coilGeometry = new THREE.TorusGeometry(0.7, 0.015, 16, 64);
+            const coil1 = new THREE.Mesh(coilGeometry, coilMaterial);
+            coil1.rotation.x = Math.PI / 2;
+            coil1.position.y = -0.2;
+            group.add(coil1);
+            const coil2 = new THREE.Mesh(coilGeometry, coilMaterial);
+            coil2.rotation.x = Math.PI / 2;
+            coil2.position.y = -1;
+            coil2.scale.set(0.43, 0.43, 0.43);
+            group.add(coil2);
+            const chipMaterial = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.9, roughness: 0.1 });
+            const chipGeometry = new THREE.BoxGeometry(0.2, 0.05, 0.2);
+            const chip = new THREE.Mesh(chipGeometry, chipMaterial);
+            chip.position.y = -0.7;
+            group.add(chip);
+            scene.add(group);
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.016;
+                group.rotation.y = time * 0.2;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        initHeroScene();
+        initQuantumScene();
     </script>
 </body>
 </html>
