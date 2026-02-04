@@ -453,7 +453,7 @@
             navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
         }
 
-        // Baymax Character Animation
+        // Baymax Character Animation (Classic Baymax from the photo)
         const canvas = document.getElementById('ai-sphere');
         const ctx = canvas.getContext('2d');
         canvas.width = 380;
@@ -468,137 +468,162 @@
             
             ctx.clearRect(0, 0, width, height);
             
-            // Breathing animation
-            const breathe = Math.sin(time * 1.5) * 0.03;
+            // Breathing animation - gentle and slow
+            const breathe = Math.sin(time * 1.2) * 0.02;
             const scale = 1 + breathe;
-            const floatY = Math.sin(time * 0.8) * 5;
+            const floatY = Math.sin(time * 0.5) * 3;
             
             ctx.save();
             ctx.translate(centerX, centerY + floatY);
             ctx.scale(scale, scale);
             
-            // Glow effect
-            const glowGradient = ctx.createRadialGradient(0, 0, 60, 0, 0, 140);
-            glowGradient.addColorStop(0, 'rgba(255, 107, 53, 0.2)');
+            // Soft glow
+            const glowGradient = ctx.createRadialGradient(0, 0, 50, 0, 0, 160);
+            glowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.3)');
+            glowGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)');
             glowGradient.addColorStop(1, 'transparent');
             ctx.fillStyle = glowGradient;
             ctx.beginPath();
-            ctx.arc(0, 0, 140, 0, Math.PI * 2);
+            ctx.arc(0, 0, 160, 0, Math.PI * 2);
             ctx.fill();
             
-            // Body - rounded inflatable shape
-            const bodyGradient = ctx.createRadialGradient(-15, -15, 0, 0, 0, 100);
+            // Body - smooth inflatable shape
+            const bodyGradient = ctx.createRadialGradient(-20, 20, 0, 0, 0, 120);
             bodyGradient.addColorStop(0, '#FFFFFF');
-            bodyGradient.addColorStop(0.7, '#F5F5F5');
-            bodyGradient.addColorStop(1, '#E0E0E0');
+            bodyGradient.addColorStop(0.6, '#FAFAFA');
+            bodyGradient.addColorStop(1, '#E8E8E8');
             
+            // Body
             ctx.fillStyle = bodyGradient;
             ctx.beginPath();
-            ctx.ellipse(0, 25, 105, 90, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 30, 115, 95, 0, 0, Math.PI * 2);
             ctx.fill();
             
-            // Body outline
-            ctx.strokeStyle = 'rgba(180, 180, 180, 0.4)';
-            ctx.lineWidth = 2;
+            // Body subtle outline
+            ctx.strokeStyle = 'rgba(150, 150, 150, 0.3)';
+            ctx.lineWidth = 1.5;
             ctx.stroke();
             
-            // Head - very rounded
+            // Head - classic rounded shape
             ctx.fillStyle = bodyGradient;
             ctx.beginPath();
-            ctx.ellipse(0, -35, 75, 65, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, -35, 80, 70, 0, 0, Math.PI * 2);
             ctx.fill();
+            ctx.strokeStyle = 'rgba(150, 150, 150, 0.3)';
             ctx.stroke();
             
-            // Eyes - dark ovals with friendly expression
+            // Eyes - classic black ovals
             const eyeY = -45;
-            const eyeSpacing = 28;
-            const eyeBlink = Math.sin(time * 3) > 0.98 ? 0.1 : 1;
+            const eyeSpacing = 30;
+            const eyeBlink = Math.sin(time * 2.5) > 0.97 ? 0.05 : 1;
             
-            ctx.fillStyle = '#1a1a1a';
+            ctx.fillStyle = '#111111';
             // Left eye
             ctx.beginPath();
-            ctx.ellipse(-eyeSpacing, eyeY, 12 * eyeBlink, 16 * eyeBlink, 0, 0, Math.PI * 2);
+            ctx.ellipse(-eyeSpacing, eyeY, 14 * eyeBlink, 18 * eyeBlink, 0, 0, Math.PI * 2);
             ctx.fill();
             // Right eye
             ctx.beginPath();
-            ctx.ellipse(eyeSpacing, eyeY, 12 * eyeBlink, 16 * eyeBlink, 0, 0, Math.PI * 2);
+            ctx.ellipse(eyeSpacing, eyeY, 14 * eyeBlink, 18 * eyeBlink, 0, 0, Math.PI * 2);
             ctx.fill();
             
-            // Eye highlights
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            // Eye shine
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
             ctx.beginPath();
-            ctx.ellipse(-eyeSpacing - 3, eyeY - 5, 4, 5, 0, 0, Math.PI * 2);
+            ctx.ellipse(-eyeSpacing - 4, eyeY - 5, 5, 6, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.beginPath();
-            ctx.ellipse(eyeSpacing - 3, eyeY - 5, 4, 5, 0, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // Cheek blush
-            const blushGradient = ctx.createRadialGradient(-55, -25, 0, -55, -25, 15);
-            blushGradient.addColorStop(0, 'rgba(255, 150, 150, 0.4)');
-            blushGradient.addColorStop(1, 'transparent');
-            ctx.fillStyle = blushGradient;
-            ctx.beginPath();
-            ctx.ellipse(-55, -25, 15, 10, -0.2, 0, Math.PI * 2);
+            ctx.ellipse(eyeSpacing - 4, eyeY - 5, 5, 6, 0, 0, Math.PI * 2);
             ctx.fill();
             
-            const blushGradient2 = ctx.createRadialGradient(55, -25, 0, 55, -25, 15);
-            blushGradient2.addColorStop(0, 'rgba(255, 150, 150, 0.4)');
-            blushGradient2.addColorStop(1, 'transparent');
-            ctx.fillStyle = blushGradient2;
+            // Nose - small grey oval
+            const noseGradient = ctx.createRadialGradient(0, -25, 0, 0, -25, 10);
+            noseGradient.addColorStop(0, '#A0A0A0');
+            noseGradient.addColorStop(1, '#707070');
+            ctx.fillStyle = noseGradient;
             ctx.beginPath();
-            ctx.ellipse(55, -25, 15, 10, 0.2, 0, Math.PI * 2);
+            ctx.ellipse(0, -25, 8, 6, 0, 0, Math.PI * 2);
             ctx.fill();
             
-            // Smile - gentle curve
+            // Nose highlight
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+            ctx.beginPath();
+            ctx.ellipse(-2, -27, 3, 2, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Mouth - gentle smile line
             ctx.strokeStyle = '#333333';
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2.5;
             ctx.lineCap = 'round';
             ctx.beginPath();
-            ctx.arc(0, -20, 25, 0.2 * Math.PI, 0.8 * Math.PI);
+            ctx.arc(0, -10, 20, 0.15 * Math.PI, 0.85 * Math.PI);
             ctx.stroke();
             
-            // Smile highlight
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-            ctx.lineWidth = 2;
+            // Small dent above nose
+            ctx.fillStyle = 'rgba(200, 200, 200, 0.5)';
             ctx.beginPath();
-            ctx.arc(0, -20, 25, 0.25 * Math.PI, 0.75 * Math.PI);
-            ctx.stroke();
+            ctx.ellipse(0, -75, 25, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
             
-            // Little ears
+            // Ears - small rounded
             ctx.fillStyle = bodyGradient;
+            ctx.strokeStyle = 'rgba(150, 150, 150, 0.3)';
+            
+            // Left ear
             ctx.beginPath();
-            ctx.ellipse(-72, -40, 12, 18, -0.3, 0, Math.PI * 2);
+            ctx.ellipse(-78, -35, 10, 14, -0.4, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
+            
+            // Right ear
             ctx.beginPath();
-            ctx.ellipse(72, -40, 12, 18, 0.3, 0, Math.PI * 2);
+            ctx.ellipse(78, -35, 10, 14, 0.4, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
             
-            // Arms - short and cute
-            const armWave = Math.sin(time * 2) * 0.05;
+            // Arms - short and round
+            const armWave = Math.sin(time * 1.5) * 0.03;
             ctx.fillStyle = bodyGradient;
+            ctx.strokeStyle = 'rgba(150, 150, 150, 0.3)';
             
             // Left arm
             ctx.save();
-            ctx.translate(-85, 20);
-            ctx.rotate(-0.3 + armWave);
+            ctx.translate(-95, 35);
+            ctx.rotate(-0.25 + armWave);
             ctx.beginPath();
-            ctx.ellipse(0, 0, 18, 35, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, 16, 40, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
             ctx.restore();
             
             // Right arm
             ctx.save();
-            ctx.translate(85, 20);
-            ctx.rotate(0.3 - armWave);
+            ctx.translate(95, 35);
+            ctx.rotate(0.25 - armWave);
             ctx.beginPath();
-            ctx.ellipse(0, 0, 18, 35, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, 16, 40, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
             ctx.restore();
+            
+            // Chest sensor
+            const sensorGradient = ctx.createRadialGradient(0, 50, 0, 0, 50, 15);
+            sensorGradient.addColorStop(0, '#808080');
+            sensorGradient.addColorStop(1, '#505050');
+            ctx.fillStyle = sensorGradient;
+            ctx.beginPath();
+            ctx.ellipse(0, 50, 12, 10, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Sensor glow
+            const sensorGlow = ctx.createRadialGradient(0, 50, 0, 0, 50, 12);
+            sensorGlow.addColorStop(0, 'rgba(255, 107, 53, 0.6)');
+            sensorGlow.addColorStop(0.5, 'rgba(255, 107, 53, 0.2)');
+            sensorGlow.addColorStop(1, 'transparent');
+            ctx.fillStyle = sensorGlow;
+            ctx.beginPath();
+            ctx.ellipse(0, 50, 10, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
             
             ctx.restore();
             
