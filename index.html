@@ -9,275 +9,347 @@
     <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
     <style>
         html { scroll-behavior: smooth; scroll-padding-top: 100px; }
-        body { background-color: #FFF9F0; color: #2D3436; font-family: 'Inter', sans-serif; }
+        body { background-color: #0a0a0f; color: #ffffff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .font-serif { font-family: 'Playfair Display', serif; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
-        .animate-fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        .gradient-text { background: linear-gradient(135deg, #FF6B35, #FF8E8E, #C5A059); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .glow-text { text-shadow: 0 0 40px rgba(255,107,53,0.5); }
     </style>
 </head>
-<body>
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-6">
+<body class="bg-[#0a0a0f]">
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent py-6">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-white font-serif font-bold text-xl pb-1 shadow-lg">i</div>
-                <span class="font-serif font-bold text-xl tracking-wide text-stone-800">iiddo</span>
+                <div class="w-10 h-10 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-white font-serif font-bold text-xl pb-1 shadow-lg shadow-orange-500/30">i</div>
+                <span class="font-serif font-bold text-xl tracking-wide text-white">iiddo</span>
             </div>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-stone-600">
-                <a href="#features" class="hover:text-[#FF6B35] transition-colors">Features</a>
-                <a href="#safety" class="hover:text-[#FF6B35] transition-colors">Safety</a>
-                <a href="#parents" class="hover:text-[#FF6B35] transition-colors">Parents</a>
-                <a href="#get-started" class="px-5 py-2 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full hover:shadow-lg transition-all">Get Started</a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-gray-300">
+                <a href="#features" class="hover:text-[#FF6B35] transition-all duration-300">Features</a>
+                <a href="#safety" class="hover:text-[#FF6B35] transition-all duration-300">Safety</a>
+                <a href="#parents" class="hover:text-[#FF6B35] transition-all duration-300">Parents</a>
+                <a href="#get-started" class="px-5 py-2 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full hover:shadow-lg hover:shadow-orange-500/40 transition-all duration-300">Get Started</a>
             </div>
         </div>
     </nav>
 
-    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
         <canvas id="hero-canvas" class="absolute inset-0 z-0"></canvas>
-        <div class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,249,240,0.95)_0%,rgba(255,249,240,0.7)_50%,rgba(255,249,240,0.4)_100%)]"></div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#0a0a0f] via-[#0a0a0f]/95 to-[#0a0a0f]"></div>
         <div class="relative z-10 container mx-auto px-6 text-center">
-            <div class="inline-block mb-4 px-4 py-2 border border-[#C5A059] text-[#C5A059] text-xs tracking-[0.2em] uppercase font-bold rounded-full bg-white/50 backdrop-blur-sm animate-fade-in">AI Mental Wellness Companion</div>
-            <h1 class="font-serif text-5xl md:text-7xl font-medium leading-tight text-stone-900 mb-6 animate-fade-in-up">iiddo<span class="block italic font-normal text-stone-500 text-2xl md:text-4xl mt-4">Always Here to Listen</span></h1>
-            <p class="max-w-2xl mx-auto text-lg md:text-xl text-stone-600 font-light leading-relaxed mb-10 animate-fade-in-up" style="animation-delay:0.2s;">The AI-powered mental wellness companion designed exclusively for ages 8-16. Available 24/7, always ready to listen, understand, and support.</p>
-            <div class="flex justify-center gap-4 flex-wrap animate-fade-in-up" style="animation-delay:0.3s;">
-                <a href="#get-started" class="px-8 py-4 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full font-medium hover:shadow-xl transition-all">Start Free Trial</a>
-                <a href="#features" class="px-8 py-4 bg-white text-stone-700 rounded-full font-medium border border-stone-200 hover:border-[#C5A059] transition-all">Learn More</a>
+            <div class="inline-block mb-6 px-4 py-2 border border-[#FF6B35]/30 text-[#FF6B35] text-xs tracking-[0.3em] uppercase font-bold rounded-full bg-[#FF6B35]/5 backdrop-blur-sm animate-fade-in">AI Mental Wellness Companion</div>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-medium leading-tight text-white mb-6 animate-fade-in-up glow-text">
+                iiddo
+                <span class="block italic font-normal text-gray-400 text-2xl md:text-4xl mt-4 font-light">Always Here to Listen</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-10 animate-fade-in-up" style="animation-delay:0.2s;">
+                The AI-powered mental wellness companion designed exclusively for ages 8-16. Available 24/7, always ready to listen, understand, and support.
+            </p>
+            <div class="flex justify-center gap-4 flex-wrap animate-fade-in-up" style="animation-delay:0.4s;">
+                <a href="#get-started" class="px-8 py-4 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full font-medium hover:shadow-xl hover:shadow-orange-500/40 transition-all duration-300 transform hover:scale-105">Start Free Trial</a>
+                <a href="#features" class="px-8 py-4 bg-white/5 text-white rounded-full font-medium border border-white/10 hover:border-[#FF6B35]/50 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm">Learn More</a>
             </div>
         </div>
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-fade-in" style="animation-delay:0.5s;">
-            <a href="#features" class="flex flex-col items-center gap-2 text-sm font-medium text-stone-400 hover:text-stone-600 transition-colors"><span>EXPLORE</span><span class="p-2 border border-stone-300 rounded-full bg-white/50">↓</span></a>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-fade-in" style="animation-delay:0.6s;">
+            <a href="#features" class="flex flex-col items-center gap-2 text-sm font-medium text-gray-500 hover:text-[#FF6B35] transition-colors">
+                <span class="tracking-widest">EXPLORE</span>
+                <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            </a>
         </div>
     </header>
 
-    <section id="features" class="py-24 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <div class="inline-block mb-3 text-xs font-bold tracking-widest text-stone-500 uppercase">Core Features</div>
-                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Why Choose Iiddo?</h2>
-                <p class="text-lg text-stone-600 max-w-2xl mx-auto">Built specifically for young minds, with safety, empathy, and growth at the heart of everything we do.</p>
+    <!-- Features Section -->
+    <section id="features" class="py-32 bg-[#0a0a0f] relative">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <div class="inline-block mb-4 text-xs font-bold tracking-widest text-[#FF6B35] uppercase animate-fade-in">Core Features</div>
+                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-white glow-text animate-fade-in-up">Why Choose Iiddo?</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay:0.1s;">Built specifically for young minds, with safety, empathy, and growth at the heart of everything we do.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
-                    <div class="text-4xl mb-4">🗣️</div>
-                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Always-On AI Companion</h3>
-                    <p class="text-stone-600 leading-relaxed">Our intelligent AI listens without judgment, offers empathy, and provides guidance whenever your child needs it.</p>
-                </div>
-                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
-                    <div class="text-4xl mb-4">🎮</div>
-                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Gamified Learning</h3>
-                    <p class="text-stone-600 leading-relaxed">Engaging activities, rewards, and interactive stories that make emotional learning fun and accessible.</p>
-                </div>
-                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
-                    <div class="text-4xl mb-4">🛡️</div>
-                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Advanced Safety Net</h3>
-                    <p class="text-stone-600 leading-relaxed">Real-time crisis detection with immediate professional intervention protocols.</p>
-                </div>
-                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
-                    <div class="text-4xl mb-4">👨‍👩‍👧</div>
-                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Parent Dashboard</h3>
-                    <p class="text-stone-600 leading-relaxed">Empower parents with insights, resources, and tools to support their child's emotional development.</p>
-                </div>
-                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
-                    <div class="text-4xl mb-4">📊</div>
-                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Progress Tracking</h3>
-                    <p class="text-stone-600 leading-relaxed">Visualize emotional growth over time with intuitive charts and personalized insights.</p>
-                </div>
-                <div class="group p-8 bg-[#FFF9F0] rounded-2xl border border-stone-100 hover:border-[#C5A059]/30 hover:shadow-lg transition-all duration-300">
-                    <div class="text-4xl mb-4">🌍</div>
-                    <h3 class="font-serif text-xl font-medium text-stone-900 mb-3">Multilingual Support</h3>
-                    <p class="text-stone-600 leading-relaxed">Breaking language barriers with support for English and Chinese.</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                    { icon: '🗣️', title: 'Always-On AI Companion', desc: 'Our intelligent AI listens without judgment, offers empathy, and provides guidance whenever your child needs it.' },
+                    { icon: '🎮', title: 'Gamified Learning', desc: 'Engaging activities, rewards, and interactive stories that make emotional learning fun and accessible.' },
+                    { icon: '🛡️', title: 'Advanced Safety Net', desc: 'Real-time crisis detection with immediate professional intervention protocols.' },
+                    { icon: '👨‍👩‍👧', title: 'Parent Dashboard', desc: 'Empower parents with insights, resources, and tools to support their child\'s emotional development.' },
+                    { icon: '📊', title: 'Progress Tracking', desc: 'Visualize emotional growth over time with intuitive charts and personalized insights.' },
+                    { icon: '🌍', title: 'Multilingual Support', desc: 'Breaking language barriers with support for English and Chinese.' }
+                ].map((f, i) => (
+                    <div key={i} class="group p-8 bg-gradient-to-br from-white/5 to-transparent rounded-2xl border border-white/10 hover:border-[#FF6B35]/30 hover:shadow-lg hover:shadow-[#FF6B35]/10 transition-all duration-500 animate-fade-in-up" style={{animationDelay:(i+2)*0.1+'s'}}>
+                        <div class="text-4xl mb-4 transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">{f.icon}</div>
+                        <h3 class="font-serif text-xl font-medium text-white mb-3 group-hover:text-[#FF6B35] transition-colors">{f.title}</h3>
+                        <p class="text-gray-400 leading-relaxed text-sm">{f.desc}</p>
+                    </div>
+                ))}
             </div>
         </div>
     </section>
 
-    <section id="safety" class="py-24 bg-[#FFF9F0]">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-stone-900">Safety Is Our Foundation</h2>
-                <p class="text-lg text-stone-600 max-w-2xl mx-auto">We go above and beyond to ensure every interaction is safe, secure, and supportive.</p>
+    <!-- Safety Section -->
+    <section id="safety" class="py-32 bg-gradient-to-b from-[#0a0a0f] to-[#0f0f15] relative">
+        <canvas id="safety-canvas" class="absolute inset-0 z-0 opacity-30"></canvas>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="font-serif text-4xl md:text-5xl mb-6 text-white glow-text animate-fade-in-up">Safety Is Our Foundation</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay:0.1s;">We go above and beyond to ensure every interaction is safe, secure, and supportive.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center p-6">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">🛡️</div>
-                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Crisis Detection</h3>
-                    <p class="text-stone-600 text-sm leading-relaxed">Advanced AI detects signs of distress and immediately connects users with professional help.</p>
-                </div>
-                <div class="text-center p-6">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">🔒</div>
-                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Data Privacy</h3>
-                    <p class="text-stone-600 text-sm leading-relaxed">Enterprise-grade encryption. We never sell or share personal information.</p>
-                </div>
-                <div class="text-center p-6">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">👨‍👩‍👧</div>
-                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Parent Controls</h3>
-                    <p class="text-stone-600 text-sm leading-relaxed">Granular privacy settings respecting child's autonomy while giving parents peace of mind.</p>
-                </div>
-                <div class="text-center p-6">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg">✅</div>
-                    <h3 class="font-serif text-lg font-medium text-stone-900 mb-2">Human Oversight</h3>
-                    <p class="text-stone-600 text-sm leading-relaxed">Regular content reviews by child psychology experts ensure age-appropriate guidance.</p>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[
+                    { icon: '🛡️', title: 'Crisis Detection', desc: 'Advanced AI detects signs of distress and immediately connects users with professional help.' },
+                    { icon: '🔒', title: 'Data Privacy', desc: 'Enterprise-grade encryption. We never sell or share personal information.' },
+                    { icon: '👨‍👩‍👧', title: 'Parent Controls', desc: 'Granular privacy settings respecting child\'s autonomy while giving parents peace of mind.' },
+                    { icon: '✅', title: 'Human Oversight', desc: 'Regular content reviews by child psychology experts ensure age-appropriate guidance.' }
+                ].map((s, i) => (
+                    <div key={i} class="text-center p-6 animate-fade-in-up" style={{animationDelay:(i+1)*0.1+'s'}}>
+                        <div class="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-2xl shadow-lg shadow-orange-500/30 transform hover:scale-110 hover:rotate-3 transition-all duration-500">{s.icon}</div>
+                        <h3 class="font-serif text-lg font-medium text-white mb-2">{s.title}</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">{s.desc}</p>
+                    </div>
+                ))}
             </div>
         </div>
     </section>
 
-    <section id="parents" class="py-24 bg-white border-t border-stone-200">
-        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <!-- Parents Section -->
+    <section id="parents" class="py-32 bg-[#0f0f15] border-t border-white/5">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div class="relative">
-                <div class="aspect-square bg-[#F5F4F0] rounded-xl overflow-hidden relative border border-stone-200 shadow-inner">
+                <div class="aspect-square rounded-2xl overflow-hidden relative border border-white/10 shadow-2xl">
                     <canvas id="quantum-canvas" class="w-full h-full"></canvas>
-                    <div class="absolute bottom-4 left-0 right-0 text-center text-xs text-stone-400 font-serif italic">AI Companion Simulation</div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f15] via-transparent to-transparent"></div>
+                    <div class="absolute bottom-6 left-0 right-0 text-center">
+                        <div class="inline-block px-4 py-2 bg-[#0a0a0f]/80 backdrop-blur-sm rounded-full text-xs text-gray-400 font-serif italic border border-white/10">AI Companion Simulation</div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div class="inline-block mb-3 text-xs font-bold tracking-widest text-stone-500 uppercase">For Parents</div>
-                <h2 class="font-serif text-4xl mb-6 text-stone-900">Be Part of Their Journey</h2>
-                <p class="text-lg text-stone-600 mb-6 leading-relaxed">Parenting in the digital age is challenging. Iiddo empowers you with tools, resources, and insights to support your child's mental wellness.</p>
-                <ul class="space-y-4 mb-8">
-                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Dashboard showing emotional trends (with child's consent)</li>
-                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Expert resources on adolescent development</li>
-                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Conversation starters and family activities</li>
-                    <li class="flex items-center gap-3 text-stone-600"><span class="w-6 h-6 bg-[#C5A059]/20 rounded-full flex items-center justify-center text-[#C5A059] text-sm">✓</span>Access to professional counseling referrals</li>
+            <div class="animate-fade-in-up">
+                <div class="inline-block mb-4 text-xs font-bold tracking-widest text-[#FF6B35] uppercase">For Parents</div>
+                <h2 class="font-serif text-4xl mb-6 text-white glow-text">Be Part of Their Journey</h2>
+                <p class="text-gray-400 text-lg leading-relaxed mb-8">Parenting in the digital age is challenging. Iiddo empowers you with tools, resources, and insights to support your child's mental wellness.</p>
+                <ul class="space-y-4">
+                    {[
+                        'Dashboard showing emotional trends (with child\'s consent)',
+                        'Expert resources on adolescent development',
+                        'Conversation starters and family activities',
+                        'Access to professional counseling referrals'
+                    ].map((item, i) => (
+                        <li key={i} class="flex items-center gap-3 text-gray-300">
+                            <span class="w-6 h-6 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] rounded-full flex items-center justify-center text-white text-sm shadow-lg">✓</span>
+                            {item}
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>
     </section>
 
-    <section id="get-started" class="py-24 bg-gradient-to-br from-[#FF6B35] to-[#FF8E8E] text-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="font-serif text-4xl md:text-5xl mb-6">Ready to Start the Conversation?</h2>
-            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Join thousands of families who have found a trusted companion for their children's mental wellness journey.</p>
-            <div class="flex justify-center gap-4 flex-wrap">
-                <a href="#" class="px-8 py-4 bg-white text-[#FF6B35] rounded-full font-medium hover:shadow-xl transition-all">Get Started Free</a>
-                <a href="#" class="px-8 py-4 bg-white/20 text-white rounded-full font-medium border border-white/40 hover:bg-white/30 transition-all">Contact Us</a>
+    <!-- CTA Section -->
+    <section id="get-started" class="py-32 bg-gradient-to-br from-[#0a0a0f] via-[#0a0a0f] to-[#1a1a2e] relative overflow-hidden">
+        <canvas id="cta-canvas" class="absolute inset-0 z-0 opacity-20"></canvas>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="font-serif text-4xl md:text-5xl mb-6 text-white glow-text animate-fade-in-up">Ready to Start the Conversation?</h2>
+            <p class="text-gray-400 text-xl mb-10 max-w-2xl mx-auto animate-fade-in-up" style="animation-delay:0.1s;">Join thousands of families who have found a trusted companion for their children's mental wellness journey.</p>
+            <div class="flex justify-center gap-4 flex-wrap animate-fade-in-up" style="animation-delay:0.2s;">
+                <a href="#" class="px-10 py-4 bg-gradient-to-r from-[#FF6B35] to-[#FF8E8E] text-white rounded-full font-medium hover:shadow-xl hover:shadow-orange-500/40 transition-all duration-300 transform hover:scale-105">Get Started Free</a>
+                <a href="#" class="px-10 py-4 bg-white/5 text-white rounded-full font-medium border border-white/20 hover:border-[#FF6B35]/50 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm">Contact Us</a>
             </div>
         </div>
     </section>
 
-    <footer class="bg-stone-900 text-stone-400 py-16">
+    <!-- Footer -->
+    <footer class="bg-[#050508] py-16 border-t border-white/5">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-8">
                 <div class="text-center md:text-left">
-                    <div class="text-white font-serif font-bold text-2xl mb-2"><span class="text-[#C5A059]">iiddo</span></div>
-                    <p class="text-sm">AI-Powered Mental Wellness for Young Minds</p>
+                    <div class="text-white font-serif font-bold text-2xl mb-2">
+                        <span class="bg-gradient-to-r from-[#FF6B35] to-[#C5A059] bg-clip-text text-transparent">iiddo</span>
+                    </div>
+                    <p class="text-gray-500 text-sm">AI-Powered Mental Wellness for Young Minds</p>
                 </div>
                 <div class="flex gap-8 text-sm">
-                    <a href="#" class="hover:text-[#C5A059] transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-[#C5A059] transition-colors">Terms</a>
-                    <a href="#" class="hover:text-[#C5A059] transition-colors">Contact</a>
+                    <a href="#" class="text-gray-500 hover:text-[#FF6B35] transition-colors">Privacy</a>
+                    <a href="#" class="text-gray-500 hover:text-[#FF6B35] transition-colors">Terms</a>
+                    <a href="#" class="text-gray-500 hover:text-[#FF6B35] transition-colors">Contact</a>
                 </div>
             </div>
-            <div class="text-center mt-12 text-xs text-stone-600">© 2025 Iiddo. All rights reserved.</div>
+            <div class="text-center mt-12 text-gray-600 text-sm">© 2025 Iiddo. All rights reserved.</div>
         </div>
     </footer>
 
     <script>
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.remove('bg-transparent', 'py-6');
-                navbar.classList.add('bg-[#FFF9F0]/95', 'backdrop-blur-md', 'shadow-sm', 'py-4');
-            } else {
-                navbar.classList.add('bg-transparent', 'py-6');
-                navbar.classList.remove('bg-[#FFF9F0]/95', 'backdrop-blur-md', 'shadow-sm', 'py-4');
+        // Enhanced Particle System
+        class ParticleSystem {
+            constructor(canvas, config = {}) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.connections = [];
+                this.mouse = { x: null, y: null };
+                this.config = {
+                    particleCount: config.particleCount || 150,
+                    connectionDistance: config.connectionDistance || 120,
+                    mouseDistance: 200,
+                    colors: config.colors || ['#FF6B35', '#FF8E8E', '#C5A059', '#4F46E5', '#9333EA'],
+                    speed: config.speed || 0.3,
+                    ...config
+                };
+                
+                this.resize();
+                this.initParticles();
+                this.setupEvents();
             }
-        });
 
-        function initHeroScene() {
-            const canvas = document.getElementById('hero-canvas');
-            if (!canvas) return;
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 6;
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            const pointLight = new THREE.PointLight(0xffffff, 1);
-            pointLight.position.set(10, 10, 10);
-            scene.add(pointLight);
-            
-            // Purple sphere
-            const sphereGeometry = new THREE.SphereGeometry(1.2, 64, 64);
-            const sphereMaterial = new THREE.MeshPhysicalMaterial({ color: 0x4F46E5, metalness: 0.1, roughness: 0.3, transparent: true, opacity: 0.85, clearcoat: 1, emissive: 0x4F46E5, emissiveIntensity: 0.15 });
-            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-            const positions = sphereGeometry.attributes.position;
-            for (let i = 0; i < positions.count; i++) {
-                positions.setXYZ(i, positions.getX(i) + (Math.random() - 0.5) * 0.15, positions.getY(i) + (Math.random() - 0.5) * 0.15, positions.getZ(i) + (Math.random() - 0.5) * 0.15);
+            resize() {
+                const dpr = Math.min(window.devicePixelRatio, 2);
+                this.canvas.width = this.canvas.offsetWidth * dpr;
+                this.canvas.height = this.canvas.offsetHeight * dpr;
+                this.ctx.scale(dpr, dpr);
+                this.width = this.canvas.offsetWidth;
+                this.height = this.canvas.offsetHeight;
             }
-            sphereGeometry.computeVertexNormals();
-            scene.add(sphere);
-            
-            // Torus rings
-            const torusGeometry = new THREE.TorusGeometry(2.5, 0.06, 16, 100);
-            const torusMaterial = new THREE.MeshStandardMaterial({ color: 0xC5A059, emissive: 0xC5A059, emissiveIntensity: 0.5, transparent: true, opacity: 0.6, wireframe: true });
-            const torus1 = new THREE.Mesh(torusGeometry, torusMaterial);
-            const torus2 = new THREE.Mesh(torusGeometry, torusMaterial);
-            const torus3 = new THREE.Mesh(torusGeometry, torusMaterial);
-            torus1.rotation.x = Math.PI / 2;
-            torus2.rotation.x = Math.PI / 3;
-            torus3.rotation.x = Math.PI / 1.5;
-            scene.add(torus1);
-            scene.add(torus2);
-            scene.add(torus3);
-            
-            // Small spheres
-            const sphere2Geometry = new THREE.SphereGeometry(0.5, 32, 32);
-            const sphere2Material = new THREE.MeshPhysicalMaterial({ color: 0x9333EA, metalness: 0.1, roughness: 0.3, transparent: true, opacity: 0.85, clearcoat: 1, emissive: 0x9333EA, emissiveIntensity: 0.15 });
-            const sphere2 = new THREE.Mesh(sphere2Geometry, sphere2Material);
-            sphere2.position.set(-3, 1, -2);
-            scene.add(sphere2);
-            
-            const sphere3Geometry = new THREE.SphereGeometry(0.6, 32, 32);
-            const sphere3Material = new THREE.MeshPhysicalMaterial({ color: 0xC5A059, metalness: 0.1, roughness: 0.3, transparent: true, opacity: 0.85, clearcoat: 1, emissive: 0xC5A059, emissiveIntensity: 0.15 });
-            const sphere3 = new THREE.Mesh(sphere3Geometry, sphere3Material);
-            sphere3.position.set(3, -1, -3);
-            scene.add(sphere3);
-            
-            // Stars
-            const starsGeometry = new THREE.BufferGeometry();
-            const starCount = 1000;
-            const starPositions = new Float32Array(starCount * 3);
-            for (let i = 0; i < starCount * 3; i++) {
-                starPositions[i] = (Math.random() - 0.5) * 200;
+
+            initParticles() {
+                this.particles = [];
+                for (let i = 0; i < this.config.particleCount; i++) {
+                    this.particles.push(this.createParticle());
+                }
             }
-            starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-            const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.3 });
-            const stars = new THREE.Points(starsGeometry, starsMaterial);
-            scene.add(stars);
-            
-            let time = 0;
-            function animate() {
-                requestAnimationFrame(animate);
-                time += 0.016;
-                const breathe = 1 + Math.sin(time * 1.5) * 0.05;
-                sphere.scale.set(breathe, breathe, breathe);
-                sphere2.scale.set(breathe, breathe, breathe);
-                sphere3.scale.set(breathe, breathe, breathe);
-                torus1.rotation.z = time * 0.3;
-                torus2.rotation.z = time * -0.2;
-                torus3.rotation.z = time * 0.25;
-                sphere2.position.y = 1 + Math.sin(time * 2 - 3) * 0.2;
-                sphere2.position.x = -3 + Math.sin(time * 2) * 0.1;
-                sphere3.position.y = -1 + Math.sin(time * 2 + 3) * 0.2;
-                sphere3.position.x = 3 + Math.sin(time * 2) * 0.1;
-                sphere.rotation.x = time * 0.5;
-                sphere.rotation.z = time * 0.3;
-                stars.rotation.y += 0.001;
-                renderer.render(scene, camera);
+
+            createParticle() {
+                const color = this.config.colors[Math.floor(Math.random() * this.config.colors.length)];
+                return {
+                    x: Math.random() * this.width,
+                    y: Math.random() * this.height,
+                    vx: (Math.random() - 0.5) * this.config.speed,
+                    vy: (Math.random() - 0.5) * this.config.speed,
+                    radius: Math.random() * 2 + 1,
+                    color: color,
+                    baseColor: color,
+                    alpha: Math.random() * 0.5 + 0.3,
+                    pulse: Math.random() * Math.PI * 2,
+                    pulseSpeed: Math.random() * 0.02 + 0.01,
+                    connections: []
+                };
             }
-            animate();
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
+
+            setupEvents() {
+                window.addEventListener('resize', () => this.resize());
+                this.canvas.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.mouse.x = e.clientX - rect.left;
+                    this.mouse.y = e.clientY - rect.top;
+                });
+                this.canvas.addEventListener('mouseleave', () => {
+                    this.mouse.x = null;
+                    this.mouse.y = null;
+                });
+            }
+
+            update() {
+                this.particles.forEach(particle => {
+                    // Move
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+
+                    // Bounce
+                    if (particle.x < 0 || particle.x > this.width) particle.vx *= -1;
+                    if (particle.y < 0 || particle.y > this.height) particle.vy *= -1;
+
+                    // Pulse
+                    particle.pulse += particle.pulseSpeed;
+                    particle.alpha = 0.3 + Math.sin(particle.pulse) * 0.2;
+
+                    // Mouse interaction
+                    if (this.mouse.x !== null) {
+                        const dx = this.mouse.x - particle.x;
+                        const dy = this.mouse.y - particle.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (dist < this.config.mouseDistance) {
+                            const force = (this.config.mouseDistance - dist) / this.config.mouseDistance;
+                            particle.vx -= (dx / dist) * force * 0.5;
+                            particle.vy -= (dy / dist) * force * 0.5;
+                        }
+                    }
+
+                    // Speed limit
+                    const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
+                    if (speed > this.config.speed * 3) {
+                        particle.vx = (particle.vx / speed) * this.config.speed * 3;
+                        particle.vy = (particle.vy / speed) * this.config.speed * 3;
+                    }
+                });
+            }
+
+            draw() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+
+                // Draw connections
+                for (let i = 0; i < this.particles.length; i++) {
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        const p1 = this.particles[i];
+                        const p2 = this.particles[j];
+                        const dx = p2.x - p1.x;
+                        const dy = p2.y - p1.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < this.config.connectionDistance) {
+                            const alpha = (1 - dist / this.config.connectionDistance) * 0.3;
+                            this.ctx.beginPath();
+                            this.ctx.strokeStyle = p1.color.replace(')', `, ${alpha})`).replace('rgb', 'rgba').replace('#', '');
+                            if (p1.color.startsWith('#')) {
+                                const r = parseInt(p1.color.slice(1, 3), 16);
+                                const g = parseInt(p1.color.slice(3, 5), 16);
+                                const b = parseInt(p1.color.slice(5, 7), 16);
+                                this.ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                            }
+                            this.ctx.lineWidth = 0.5;
+                            this.ctx.moveTo(p1.x, p1.y);
+                            this.ctx.lineTo(p2.x, p2.y);
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+
+                // Draw particles
+                this.particles.forEach(particle => {
+                    // Glow
+                    const gradient = this.ctx.createRadialGradient(
+                        particle.x, particle.y, 0,
+                        particle.x, particle.y, particle.radius * 4
+                    );
+                    const r = parseInt(particle.color.slice(1, 3), 16);
+                    const g = parseInt(particle.color.slice(3, 5), 16);
+                    const b = parseInt(particle.color.slice(5, 7), 16);
+                    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${particle.alpha})`);
+                    gradient.addColorStop(0.4, `rgba(${r}, ${g}, ${b}, ${particle.alpha * 0.3})`);
+                    gradient.addColorStop(1, 'transparent');
+                    
+                    this.ctx.beginPath();
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.arc(particle.x, particle.y, particle.radius * 4, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    // Core
+                    this.ctx.beginPath();
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+            }
+
+            animate() {
+                this.update();
+                this.draw();
+                requestAnimationFrame(() => this.animate());
+            }
         }
 
+        // Quantum 3D Scene
         function initQuantumScene() {
             const canvas = document.getElementById('quantum-canvas');
             if (!canvas) return;
@@ -287,68 +359,111 @@
             canvas.height = size * 2;
             canvas.style.width = size + 'px';
             canvas.style.height = size + 'px';
+
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
             camera.position.z = 5;
+
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
             renderer.setSize(size * 2, size * 2);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            scene.add(new THREE.AmbientLight(0xffffff, 1));
-            const spotLight = new THREE.SpotLight(0xC5A059, 2);
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+            const spotLight = new THREE.SpotLight(0xFF6B35, 2);
             spotLight.position.set(5, 5, 5);
-            spotLight.angle = 0.3;
+            spotLight.angle = 0.4;
             spotLight.penumbra = 1;
             scene.add(spotLight);
+
             const group = new THREE.Group();
-            const plateMaterial = new THREE.MeshStandardMaterial({ color: 0xC5A059, metalness: 1, roughness: 0.15 });
-            const plateGeometry = new THREE.CylinderGeometry(1.2, 1.2, 0.1, 64);
-            const topPlate = new THREE.Mesh(plateGeometry, plateMaterial);
-            topPlate.position.y = 1;
-            group.add(topPlate);
-            const middlePlate = new THREE.Mesh(plateGeometry, plateMaterial);
-            middlePlate.scale.set(0.83, 1, 0.83);
-            middlePlate.position.y = 0.2;
-            group.add(middlePlate);
-            const bottomPlate = new THREE.Mesh(plateGeometry, plateMaterial);
-            bottomPlate.scale.set(0.5, 1, 0.5);
-            bottomPlate.position.y = -0.6;
-            group.add(bottomPlate);
-            const rodMaterial = new THREE.MeshStandardMaterial({ color: 0xD1D5DB, metalness: 0.8, roughness: 0.2 });
-            const rodGeometry = new THREE.CylinderGeometry(0.04, 0.04, 0.8, 16);
-            [-0.5, 0.5, 0].forEach(x => {
+            const plateMaterial = new THREE.MeshStandardMaterial({ color: 0xFF6B35, metalness: 0.9, roughness: 0.1, emissive: 0xFF6B35, emissiveIntensity: 0.3 });
+            const plateGeometry = new THREE.CylinderGeometry(1, 1, 0.08, 64);
+            
+            [1, 0.2, -0.5].forEach((y, i) => {
+                const plate = new THREE.Mesh(plateGeometry, plateMaterial);
+                plate.scale.set(1 - i * 0.25, 1, 1 - i * 0.25);
+                plate.position.y = y;
+                group.add(plate);
+            });
+
+            const rodMaterial = new THREE.MeshStandardMaterial({ color: 0xC5A059, metalness: 0.9, roughness: 0.1, emissive: 0xC5A059, emissiveIntensity: 0.2 });
+            const rodGeometry = new THREE.CylinderGeometry(0.025, 0.025, 0.6, 16);
+            [-0.4, 0.4, 0].forEach(x => {
                 const rod = new THREE.Mesh(rodGeometry, rodMaterial);
                 rod.position.set(x, 0.6, 0);
                 group.add(rod);
             });
-            const coilMaterial = new THREE.MeshStandardMaterial({ color: 0xB87333, metalness: 0.8, roughness: 0.3 });
-            const coilGeometry = new THREE.TorusGeometry(0.7, 0.015, 16, 64);
+
+            const coilMaterial = new THREE.MeshStandardMaterial({ color: 0xFF8E8E, metalness: 0.8, roughness: 0.2, emissive: 0xFF8E8E, emissiveIntensity: 0.4, wireframe: true });
+            const coilGeometry = new THREE.TorusGeometry(0.6, 0.012, 8, 64);
             const coil1 = new THREE.Mesh(coilGeometry, coilMaterial);
             coil1.rotation.x = Math.PI / 2;
-            coil1.position.y = -0.2;
+            coil1.position.y = -0.15;
             group.add(coil1);
-            const coil2 = new THREE.Mesh(coilGeometry, coilMaterial);
-            coil2.rotation.x = Math.PI / 2;
-            coil2.position.y = -1;
-            coil2.scale.set(0.43, 0.43, 0.43);
-            group.add(coil2);
-            const chipMaterial = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.9, roughness: 0.1 });
-            const chipGeometry = new THREE.BoxGeometry(0.2, 0.05, 0.2);
-            const chip = new THREE.Mesh(chipGeometry, chipMaterial);
-            chip.position.y = -0.7;
-            group.add(chip);
+
+            const glowMaterial = new THREE.MeshBasicMaterial({ color: 0xFF6B35, transparent: true, opacity: 0.15 });
+            const glowGeometry = new THREE.SphereGeometry(0.15, 32, 32);
+            const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+            glow.position.y = -0.5;
+            group.add(glow);
+
             scene.add(group);
+
             let time = 0;
             function animate() {
                 requestAnimationFrame(animate);
-                time += 0.016;
-                group.rotation.y = time * 0.2;
+                time += 0.01;
+                group.rotation.y = time * 0.3;
+                const breathe = 1 + Math.sin(time * 2) * 0.05;
+                group.scale.set(breathe, breathe, breathe);
+                glowMaterial.opacity = 0.1 + Math.sin(time * 3) * 0.05;
                 renderer.render(scene, camera);
             }
             animate();
         }
 
-        initHeroScene();
-        initQuantumScene();
+        // Initialize
+        function init() {
+            const heroCanvas = document.getElementById('hero-canvas');
+            if (heroCanvas) {
+                heroCanvas.style.width = '100%';
+                heroCanvas.style.height = '100%';
+                const heroSystem = new ParticleSystem(heroCanvas, {
+                    particleCount: 120,
+                    colors: ['#FF6B35', '#FF8E8E', '#C5A059', '#4F46E5', '#9333EA'],
+                    speed: 0.4
+                });
+                heroSystem.animate();
+            }
+
+            const safetyCanvas = document.getElementById('safety-canvas');
+            if (safetyCanvas) {
+                safetyCanvas.style.width = '100%';
+                safetyCanvas.style.height = '100%';
+                const safetySystem = new ParticleSystem(safetyCanvas, {
+                    particleCount: 60,
+                    colors: ['#C5A059', '#4F46E5'],
+                    speed: 0.2
+                });
+                safetySystem.animate();
+            }
+
+            const ctaCanvas = document.getElementById('cta-canvas');
+            if (ctaCanvas) {
+                ctaCanvas.style.width = '100%';
+                ctaCanvas.style.height = '100%';
+                const ctaSystem = new ParticleSystem(ctaCanvas, {
+                    particleCount: 80,
+                    colors: ['#FF6B35', '#C5A059'],
+                    speed: 0.25
+                });
+                ctaSystem.animate();
+            }
+
+            initQuantumScene();
+        }
+
+        window.addEventListener('load', init);
     </script>
 </body>
 </html>
