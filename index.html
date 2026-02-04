@@ -6,12 +6,7 @@
     <title>Iiddo - Your AI Companion for Mental Wellness</title>
     <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary-orange: #FF6B35;
             --primary-blue: #4ECDC4;
@@ -22,13 +17,8 @@
             --text-light: #636E72;
             --white: #FFFFFF;
             --shadow: 0 10px 40px rgba(0,0,0,0.08);
-            --shadow-hover: 0 20px 60px rgba(0,0,0,0.12);
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--soft-cream);
@@ -36,7 +26,6 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
         nav {
             position: fixed;
             top: 0;
@@ -51,12 +40,7 @@
             z-index: 1000;
             transition: all 0.3s ease;
         }
-
-        nav.scrolled {
-            padding: 0.75rem 5%;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
+        nav.scrolled { padding: 0.75rem 5%; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
@@ -65,13 +49,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
         .nav-links a {
             text-decoration: none;
             color: var(--text-light);
@@ -79,7 +57,6 @@
             transition: color 0.3s ease;
             position: relative;
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
@@ -90,15 +67,8 @@
             background: var(--primary-orange);
             transition: width 0.3s ease;
         }
-
-        .nav-links a:hover {
-            color: var(--primary-orange);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
+        .nav-links a:hover { color: var(--primary-orange); }
+        .nav-links a:hover::after { width: 100%; }
         .nav-cta {
             background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
             color: var(--white);
@@ -108,12 +78,7 @@
             font-weight: 600;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255,107,53,0.4);
-        }
-
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(255,107,53,0.4); }
         .hero {
             min-height: 100vh;
             display: flex;
@@ -122,7 +87,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .hero-bg {
             position: absolute;
             top: -50%;
@@ -133,18 +97,15 @@
             border-radius: 50%;
             animation: float 20s ease-in-out infinite;
         }
-
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-30px) rotate(5deg); }
         }
-
         .hero-content {
             flex: 1;
             max-width: 600px;
             z-index: 1;
         }
-
         .hero-badge {
             display: inline-flex;
             align-items: center;
@@ -158,7 +119,6 @@
             margin-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease;
         }
-
         .hero h1 {
             font-size: 3.5rem;
             font-weight: 800;
@@ -166,27 +126,23 @@
             margin-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease 0.2s backwards;
         }
-
         .hero h1 span {
             background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
         .hero p {
             font-size: 1.25rem;
             color: var(--text-light);
             margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease 0.4s backwards;
         }
-
         .hero-buttons {
             display: flex;
             gap: 1rem;
             animation: fadeInUp 0.8s ease 0.6s backwards;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
             color: var(--white);
@@ -202,12 +158,7 @@
             border: none;
             cursor: pointer;
         }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255,107,53,0.4);
-        }
-
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255,107,53,0.4); }
         .btn-secondary {
             background: var(--white);
             color: var(--text-dark);
@@ -220,191 +171,15 @@
             border: 2px solid transparent;
             cursor: pointer;
         }
-
-        .btn-secondary:hover {
-            border-color: var(--primary-orange);
-            transform: translateY(-3px);
-        }
-
-        .hero-visual {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .ai-sphere-container {
-            width: 380px;
-            height: 380px;
-            position: relative;
-            animation: fadeInRight 1s ease;
-        }
-
-        #ai-sphere {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .particle-1 {
-            width: 14px;
-            height: 14px;
-            background: var(--primary-orange);
-            top: 15%;
-            left: 8%;
-            animation: particleFloat 3s ease-in-out infinite;
-            box-shadow: 0 0 25px var(--primary-orange);
-        }
-
-        .particle-2 {
-            width: 10px;
-            height: 10px;
-            background: var(--primary-blue);
-            top: 55%;
-            right: 12%;
-            animation: particleFloat 4s ease-in-out infinite 0.5s;
-            box-shadow: 0 0 20px var(--primary-blue);
-        }
-
-        .particle-3 {
-            width: 12px;
-            height: 12px;
-            background: var(--warm-pink);
-            bottom: 18%;
-            left: 18%;
-            animation: particleFloat 3.5s ease-in-out infinite 1s;
-            box-shadow: 0 0 22px var(--warm-pink);
-        }
-
-        .particle-4 {
-            width: 8px;
-            height: 8px;
-            background: var(--calm-lavender);
-            top: 25%;
-            right: 5%;
-            animation: particleFloat 4.5s ease-in-out infinite 1.5s;
-            box-shadow: 0 0 18px var(--calm-lavender);
-        }
-
-        .particle-5 {
-            width: 16px;
-            height: 16px;
-            background: var(--primary-orange);
-            bottom: 25%;
-            right: 8%;
-            animation: particleFloat 3s ease-in-out infinite 2s;
-            box-shadow: 0 0 28px var(--primary-orange);
-        }
-
-        .particle-6 {
-            width: 6px;
-            height: 6px;
-            background: var(--primary-blue);
-            top: 40%;
-            left: 3%;
-            animation: particleFloat 5s ease-in-out infinite 0.3s;
-            box-shadow: 0 0 12px var(--primary-blue);
-        }
-
-        @keyframes particleFloat {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
-            50% { transform: translateY(-25px) scale(1.3); opacity: 1; }
-        }
-
-        .ai-status {
-            position: absolute;
-            bottom: -25px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.95);
-            padding: 0.85rem 1.75rem;
-            border-radius: 50px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
-            backdrop-filter: blur(10px);
-        }
-
-        .status-dot {
-            width: 12px;
-            height: 12px;
-            background: #10B981;
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-            position: relative;
-        }
-
-        .status-dot::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            background: rgba(16, 185, 129, 0.3);
-            border-radius: 50%;
-            animation: pulseRing 2s ease-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-
-        @keyframes pulseRing {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-        }
-
-        .status-text {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
+        .btn-secondary:hover { border-color: var(--primary-orange); transform: translateY(-3px); }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .features {
-            padding: 6rem 5%;
-            background: var(--white);
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-        }
-
+        .features { padding: 6rem 5%; background: var(--white); }
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .section-header p { color: var(--text-light); font-size: 1.1rem; }
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -412,7 +187,6 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-
         .feature-card {
             background: var(--soft-cream);
             padding: 2rem;
@@ -421,7 +195,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .feature-card::before {
             content: '';
             position: absolute;
@@ -433,16 +206,8 @@
             transform: scaleX(0);
             transition: transform 0.3s ease;
         }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
+        .feature-card:hover { transform: translateY(-10px); box-shadow: var(--shadow); }
+        .feature-card:hover::before { transform: scaleX(1); }
         .feature-icon {
             width: 60px;
             height: 60px;
@@ -453,47 +218,17 @@
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
         }
-
         .feature-icon.orange { background: rgba(255,107,53,0.15); }
         .feature-icon.blue { background: rgba(78,205,196,0.15); }
         .feature-icon.pink { background: rgba(255,142,142,0.15); }
         .feature-icon.purple { background: rgba(168,164,255,0.15); }
-
-        .feature-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 1rem;
-        }
-
-        .age-section {
-            padding: 6rem 5%;
-        }
-
-        .age-section:nth-child(even) {
-            background: var(--white);
-        }
-
-        .age-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-        }
-
-        .age-container.reverse {
-            flex-direction: row-reverse;
-        }
-
-        .age-content {
-            flex: 1;
-        }
-
+        .feature-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .feature-card p { color: var(--text-light); font-size: 1rem; }
+        .age-section { padding: 6rem 5%; }
+        .age-section:nth-child(even) { background: var(--white); }
+        .age-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 4rem; }
+        .age-container.reverse { flex-direction: row-reverse; }
+        .age-content { flex: 1; }
         .age-badge {
             display: inline-block;
             padding: 0.5rem 1rem;
@@ -502,34 +237,12 @@
             font-weight: 600;
             margin-bottom: 1rem;
         }
-
         .age-badge.kids { background: rgba(255,107,53,0.15); color: var(--primary-orange); }
         .age-badge.teens { background: rgba(168,164,255,0.15); color: var(--calm-lavender); }
-
-        .age-content h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .age-content p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-        }
-
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-
+        .age-content h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .age-content p { color: var(--text-light); font-size: 1.1rem; margin-bottom: 2rem; }
+        .feature-list { list-style: none; }
+        .feature-list li { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; font-size: 1rem; }
         .feature-list .check {
             width: 24px;
             height: 24px;
@@ -543,65 +256,8 @@
             flex-shrink: 0;
             margin-top: 2px;
         }
-
-        .age-visual {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-
-        .age-illustration {
-            width: 400px;
-            height: 350px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .kids-visual {
-            background: linear-gradient(135deg, #FFE5D9 0%, #FFF0E5 100%);
-        }
-
-        .teens-visual {
-            background: linear-gradient(135deg, #E8E4FF 0%, #F0E8FF 100%);
-        }
-
-        .illustration-character {
-            font-size: 8rem;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .floating-element {
-            position: absolute;
-            font-size: 2rem;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .floating-element:nth-child(2) { top: 20%; left: 10%; animation-delay: 0.5s; }
-        .floating-element:nth-child(3) { top: 60%; right: 10%; animation-delay: 1s; }
-        .floating-element:nth-child(4) { bottom: 20%; left: 20%; animation-delay: 1.5s; }
-
-        .safety {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(168,164,255,0.05));
-        }
-
-        .safety-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        .safety { padding: 6rem 5%; background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(168,164,255,0.05)); }
+        .safety-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .safety-card {
             background: var(--white);
             padding: 2rem;
@@ -610,12 +266,7 @@
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
         }
-
-        .safety-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
+        .safety-card:hover { transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
         .safety-icon {
             width: 70px;
             height: 70px;
@@ -627,32 +278,10 @@
             font-size: 2rem;
             margin: 0 auto 1.5rem;
         }
-
-        .safety-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .safety-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        .stats {
-            padding: 4rem 5%;
-            background: var(--white);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
+        .safety-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .safety-card p { color: var(--text-light); font-size: 0.95rem; }
+        .stats { padding: 4rem 5%; background: var(--white); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; text-align: center; }
         .stat-item h3 {
             font-size: 3rem;
             font-weight: 800;
@@ -662,71 +291,16 @@
             background-clip: text;
             margin-bottom: 0.5rem;
         }
-
-        .stat-item p {
-            color: var(--text-light);
-            font-size: 1rem;
-        }
-
-        .cta {
-            padding: 6rem 5%;
-            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
-            text-align: center;
-            color: var(--white);
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .cta .btn-primary {
-            background: var(--white);
-            color: var(--primary-orange);
-        }
-
-        .cta .btn-secondary {
-            background: transparent;
-            color: var(--white);
-            border-color: var(--white);
-        }
-
-        .cta .btn-secondary:hover {
-            background: var(--white);
-            color: var(--primary-orange);
-        }
-
-        footer {
-            padding: 4rem 5% 2rem;
-            background: var(--text-dark);
-            color: var(--white);
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr repeat(3, 1fr);
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto 3rem;
-        }
-
+        .stat-item p { color: var(--text-light); font-size: 1rem; }
+        .cta { padding: 6rem 5%; background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink)); text-align: center; color: var(--white); }
+        .cta h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
+        .cta p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .cta .btn-primary { background: var(--white); color: var(--primary-orange); }
+        .cta .btn-secondary { background: transparent; color: var(--white); border-color: var(--white); }
+        .cta .btn-secondary:hover { background: var(--white); color: var(--primary-orange); }
+        footer { padding: 4rem 5% 2rem; background: var(--text-dark); color: var(--white); }
+        .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; max-width: 1200px; margin: 0 auto 3rem; }
         .footer-brand .logo {
             background: linear-gradient(135deg, var(--primary-orange), var(--primary-blue));
             -webkit-background-clip: text;
@@ -734,17 +308,8 @@
             background-clip: text;
             margin-bottom: 1rem;
         }
-
-        .footer-brand p {
-            color: #B2BEC3;
-            margin-bottom: 1.5rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-
+        .footer-brand p { color: #B2BEC3; margin-bottom: 1.5rem; }
+        .social-links { display: flex; gap: 1rem; }
         .social-links a {
             width: 40px;
             height: 40px;
@@ -757,133 +322,32 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
-
-        .social-links a:hover {
-            background: var(--primary-orange);
-            transform: translateY(-3px);
-        }
-
-        .footer-links h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--white);
-        }
-
-        .footer-links ul {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-links a {
-            color: #B2BEC3;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary-orange);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 2rem;
-            text-align: center;
-            color: #B2BEC3;
-            font-size: 0.9rem;
-        }
-
+        .social-links a:hover { background: var(--primary-orange); transform: translateY(-3px); }
+        .footer-links h4 { font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--white); }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 0.75rem; }
+        .footer-links a { color: #B2BEC3; text-decoration: none; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--primary-orange); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; color: #B2BEC3; font-size: 0.9rem; }
         @media (max-width: 968px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-content {
-                max-width: 100%;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .hero-visual {
-                margin-top: 3rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .age-container {
-                flex-direction: column !important;
-                text-align: center;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            
-            .ai-sphere-container {
-                width: 300px;
-                height: 300px;
-            }
+            .hero { flex-direction: column; text-align: center; }
+            .hero-content { max-width: 100%; }
+            .hero-buttons { justify-content: center; }
+            .nav-links { display: none; }
+            .age-container { flex-direction: column !important; text-align: center; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
-
         @media (max-width: 600px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .section-header h2 {
-                font-size: 2rem;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .ai-sphere-container {
-                width: 260px;
-                height: 260px;
-            }
+            .hero h1 { font-size: 2.5rem; }
+            .section-header h2 { font-size: 2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
         }
-
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 3px;
-            background: var(--text-dark);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-
-        @media (max-width: 968px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .mobile-menu-btn span { width: 25px; height: 3px; background: var(--text-dark); border-radius: 3px; transition: all 0.3s ease; }
+        @media (max-width: 968px) { .mobile-menu-btn { display: flex; } }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        #hero-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
     </style>
 </head>
 <body>
@@ -897,65 +361,29 @@
             <li><a href="#parents">Parents</a></li>
         </ul>
         <a href="#get-started" class="nav-cta">Get Started Free</a>
-        <div class="mobile-menu-btn" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+        <div class="mobile-menu-btn" onclick="toggleMenu()"><span></span><span></span><span></span></div>
     </nav>
 
     <section class="hero">
+        <canvas id="hero-canvas"></canvas>
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <div class="hero-badge">
-                <span>✨</span> The #1 AI Companion for Young Minds
-            </div>
+            <div class="hero-badge"><span>✨</span> The #1 AI Companion for Young Minds</div>
             <h1>Every Child Deserves to Be <span>Heard</span></h1>
             <p>Iiddo is the AI-powered mental wellness companion designed exclusively for ages 8-16. Available 24/7, always ready to listen, understand, and support.</p>
             <div class="hero-buttons">
-                <a href="#get-started" class="btn-primary">
-                    Start Your Journey
-                    <span>→</span>
-                </a>
+                <a href="#get-started" class="btn-primary">Start Your Journey <span>→</span></a>
                 <a href="#how-it-works" class="btn-secondary">How It Works</a>
-            </div>
-        </div>
-        
-        <div class="hero-visual">
-            <div class="ai-sphere-container">
-                <canvas id="ai-sphere"></canvas>
-                <div class="particle particle-1"></div>
-                <div class="particle particle-2"></div>
-                <div class="particle particle-3"></div>
-                <div class="particle particle-4"></div>
-                <div class="particle particle-5"></div>
-                <div class="particle particle-6"></div>
-                <div class="ai-status">
-                    <div class="status-dot"></div>
-                    <span class="status-text">AI Active • Listening</span>
-                </div>
             </div>
         </div>
     </section>
 
     <section class="stats">
         <div class="stats-grid">
-            <div class="stat-item fade-in">
-                <h3>24/7</h3>
-                <p>Always Available</p>
-            </div>
-            <div class="stat-item fade-in">
-                <h3>50K+</h3>
-                <p>Conversations Supported</p>
-            </div>
-            <div class="stat-item fade-in">
-                <h3>98%</h3>
-                <p>User Satisfaction</p>
-            </div>
-            <div class="stat-item fade-in">
-                <h3>100%</h3>
-                <p>Privacy Protected</p>
-            </div>
+            <div class="stat-item fade-in"><h3>24/7</h3><p>Always Available</p></div>
+            <div class="stat-item fade-in"><h3>50K+</h3><p>Conversations Supported</p></div>
+            <div class="stat-item fade-in"><h3>98%</h3><p>User Satisfaction</p></div>
+            <div class="stat-item fade-in"><h3>100%</h3><p>Privacy Protected</p></div>
         </div>
     </section>
 
@@ -1012,14 +440,6 @@
                     <li><span class="check">✓</span><span>Parental controls for peace of mind</span></li>
                 </ul>
             </div>
-            <div class="age-visual fade-in">
-                <div class="age-illustration kids-visual">
-                    <div class="illustration-character">🎈</div>
-                    <div class="floating-element">⭐</div>
-                    <div class="floating-element">🌈</div>
-                    <div class="floating-element">🎨</div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -1036,14 +456,6 @@
                     <li><span class="check">✓</span><span>Help with anxiety, stress, and relationships</span></li>
                     <li><span class="check">✓</span><span>Career and self-discovery guidance</span></li>
                 </ul>
-            </div>
-            <div class="age-visual fade-in">
-                <div class="age-illustration teens-visual">
-                    <div class="illustration-character">🌙</div>
-                    <div class="floating-element">🎧</div>
-                    <div class="floating-element">📱</div>
-                    <div class="floating-element">✨</div>
-                </div>
             </div>
         </div>
     </section>
@@ -1090,14 +502,6 @@
                     <li><span class="check">✓</span><span>Access to professional counseling referrals</span></li>
                     <li><span class="check">✓</span><span>Community support from other parents</span></li>
                 </ul>
-            </div>
-            <div class="age-visual fade-in">
-                <div class="age-illustration kids-visual" style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);">
-                    <div class="illustration-character">👨‍👩‍👧‍👦</div>
-                    <div class="floating-element">💚</div>
-                    <div class="floating-element">🤝</div>
-                    <div class="floating-element">📚</div>
-                </div>
             </div>
         </div>
     </section>
@@ -1159,46 +563,29 @@
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
         });
 
         // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, observerOptions);
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll for anchor links
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
-        // Mobile menu toggle
+        // Mobile menu
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
@@ -1212,168 +599,147 @@
             navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
         }
 
-        // Three.js AI Sphere Animation
-        (function() {
-            const canvas = document.getElementById('ai-sphere');
-            const container = canvas.parentElement;
-            const size = Math.min(container.clientWidth, container.clientHeight);
-            
-            canvas.width = size * 2;
-            canvas.height = size * 2;
-            canvas.style.width = size + 'px';
-            canvas.style.height = size + 'px';
+        // Three.js Hero Scene - Exactly as provided
+        const canvas = document.getElementById('hero-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 6;
 
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-            camera.position.z = 5;
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
 
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-            renderer.setSize(size * 2, size * 2);
-            renderer.setPixelRatio(window.devicePixelRatio);
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
 
-            // Main breathing sphere
-            const sphereGeometry = new THREE.SphereGeometry(1.2, 64, 64);
-            const sphereMaterial = new THREE.MeshPhysicalMaterial({
-                color: 0xFF6B35,
-                metalness: 0.1,
+        // QuantumParticle function
+        function createQuantumParticle(position, color, scale = 1) {
+            const geometry = new THREE.SphereGeometry(1, 32, 32);
+            const material = new THREE.MeshPhysicalMaterial({
+                color: color,
+                metalness: 0.5,
                 roughness: 0.3,
                 transparent: true,
                 opacity: 0.85,
                 clearcoat: 1,
-                clearcoatRoughness: 0.1,
-                emissive: 0xFF6B35,
-                emissiveIntensity: 0.15
+                clearcoatRoughness: 0,
+                emissive: color,
+                emissiveIntensity: 0.15,
+                distortion: 0.4,
+                speed: 2
             });
-            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-            scene.add(sphere);
+            
+            // Simulate MeshDistortMaterial effect
+            const geometry2 = new THREE.IcosahedronGeometry(1 * scale, 4);
+            const posAttribute = geometry2.attributes.position;
+            for (let i = 0; i < posAttribute.count; i++) {
+                const x = posAttribute.getX(i);
+                const y = posAttribute.getY(i);
+                const z = posAttribute.getZ(i);
+                posAttribute.setXYZ(i, x + (Math.random() - 0.5) * 0.1, y + (Math.random() - 0.5) * 0.1, z + (Math.random() - 0.5) * 0.1);
+            }
+            geometry2.computeVertexNormals();
+            
+            const mesh = new THREE.Mesh(geometry2, material);
+            mesh.position.set(...position);
+            mesh.scale.set(scale, scale, scale);
+            
+            return mesh;
+        }
 
-            // Inner glow sphere
-            const innerGlowGeometry = new THREE.SphereGeometry(0.9, 32, 32);
-            const innerGlowMaterial = new THREE.MeshBasicMaterial({
-                color: 0x4ECDC4,
-                transparent: true,
-                opacity: 0.4
-            });
-            const innerGlow = new THREE.Mesh(innerGlowGeometry, innerGlowMaterial);
-            scene.add(innerGlow);
-
-            // Torus rings (breathing effect)
-            const torusGeometry = new THREE.TorusGeometry(1.6, 0.02, 16, 100);
-            const torusMaterial = new THREE.MeshPhysicalMaterial({
-                color: 0xFF8E8E,
-                metalness: 0.5,
-                roughness: 0.2,
+        // MacroscopicWave function
+        function createMacroscopicWave() {
+            const geometry = new THREE.TorusGeometry(3, 0.1, 16, 100);
+            const material = new THREE.MeshStandardMaterial({
+                color: 0xC5A059,
+                emissive: 0xC5A059,
+                emissiveIntensity: 0.5,
                 transparent: true,
                 opacity: 0.6,
-                emissive: 0xFF8E8E,
-                emissiveIntensity: 0.3
+                wireframe: true
             });
-            const torus1 = new THREE.Mesh(torusGeometry, torusMaterial);
-            const torus2 = new THREE.Mesh(torusGeometry, torusMaterial);
-            const torus3 = new THREE.Mesh(torusGeometry, torusMaterial);
-            
-            torus1.rotation.x = Math.PI / 2;
-            torus2.rotation.x = Math.PI / 3;
-            torus3.rotation.x = Math.PI / 1.5;
-            
-            scene.add(torus1);
-            scene.add(torus2);
-            scene.add(torus3);
+            const torus = new THREE.Mesh(geometry, material);
+            torus.rotation.x = Math.PI / 2;
+            return torus;
+        }
 
-            // Floating particles
-            const particlesGeometry = new THREE.BufferGeometry();
-            const particleCount = 50;
-            const positions = new Float32Array(particleCount * 3);
-            const sizes = new Float32Array(particleCount);
+        // Create particles
+        const particle1 = createQuantumParticle([0, 0, 0], 0x4F46E5, 1.2);
+        const particle2 = createQuantumParticle([-3, 1, -2], 0x9333EA, 0.5);
+        const particle3 = createQuantumParticle([3, -1, -3], 0xC5A059, 0.6);
 
-            for (let i = 0; i < particleCount; i++) {
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos(2 * Math.random() - 1);
-                const radius = 1.8 + Math.random() * 1.2;
-                
-                positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-                positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-                positions[i * 3 + 2] = radius * Math.cos(phi);
-                sizes[i] = Math.random() * 3 + 1;
-            }
+        const wave1 = createMacroscopicWave();
+        const wave2 = createMacroscopicWave();
+        const wave3 = createMacroscopicWave();
 
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        scene.add(particle1);
+        scene.add(particle2);
+        scene.add(particle3);
+        scene.add(wave1);
+        scene.add(wave2);
+        scene.add(wave3);
 
-            const particlesMaterial = new THREE.PointsMaterial({
-                color: 0x4ECDC4,
-                size: 0.05,
-                transparent: true,
-                opacity: 0.6,
-                sizeAttenuation: true
-            });
+        // Create stars
+        const starsGeometry = new THREE.BufferGeometry();
+        const starCount = 1000;
+        const starPositions = new Float32Array(starCount * 3);
+        for (let i = 0; i < starCount * 3; i++) {
+            starPositions[i] = (Math.random() - 0.5) * 200;
+        }
+        starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5, sizeAttenuation: true });
+        const stars = new THREE.Points(starsGeometry, starsMaterial);
+        scene.add(stars);
 
-            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particles);
+        // Animation loop
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.016;
 
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
+            // QuantumParticle animation
+            particle1.position.y = Math.sin(time * 2) * 0.2;
+            particle1.rotation.x = time * 0.5;
+            particle1.rotation.z = time * 0.3;
 
-            const pointLight1 = new THREE.PointLight(0xFF6B35, 1, 10);
-            pointLight1.position.set(2, 2, 2);
-            scene.add(pointLight1);
+            particle2.position.y = 1 + Math.sin(time * 2 - 3) * 0.2;
+            particle2.position.x = -3 + Math.sin(time * 2) *0.1;
+            particle2.rotation.x = time * 0.5;
+            particle2.rotation.z = time * 0.3;
 
-            const pointLight2 = new THREE.PointLight(0x4ECDC4, 0.8, 10);
-            pointLight2.position.set(-2, -2, 2);
-            scene.add(pointLight2);
+            particle3.position.y = -1 + Math.sin(time * 2 + 3) * 0.2;
+            particle3.position.x = 3 + Math.sin(time * 2) * 0.1;
+            particle3.rotation.x = time * 0.5;
+            particle3.rotation.z = time * 0.3;
 
-            const pointLight3 = new THREE.PointLight(0xFF8E8E, 0.5, 10);
-            pointLight3.position.set(0, 3, -2);
-            scene.add(pointLight3);
+            // MacroscopicWave animation
+            wave1.rotation.x = Math.sin(time * 0.2) * 0.2;
+            wave1.rotation.y = time * 0.1;
 
-            // Animation loop
-            let time = 0;
-            function animate() {
-                requestAnimationFrame(animate);
-                time += 0.016;
+            wave2.rotation.x = Math.sin(time * 0.2) * 0.2 + Math.PI / 3;
+            wave2.rotation.y = time * 0.1;
 
-                // Breathing effect
-                const breathe = 1 + Math.sin(time * 1.5) * 0.08;
-                sphere.scale.set(breathe, breathe, breathe);
-                innerGlow.scale.set(breathe * 0.95, breathe * 0.95, breathe * 0.95);
+            wave3.rotation.x = Math.sin(time * 0.2) * 0.2 + Math.PI / 1.5;
+            wave3.rotation.y = time * 0.1;
 
-                // Rotate torus rings
-                torus1.rotation.z = time * 0.3;
-                torus2.rotation.z = time * -0.2;
-                torus3.rotation.z = time * 0.25;
+            // Stars
+            stars.rotation.y += 0.001;
 
-                // Subtle sphere rotation
-                sphere.rotation.y += 0.003;
-                sphere.rotation.x += 0.002;
-                innerGlow.rotation.y += 0.004;
+            renderer.render(scene, camera);
+        }
 
-                // Particle movement
-                particles.rotation.y += 0.001;
-                
-                // Pulse particles
-                const particleSizes = particles.geometry.attributes.size.array;
-                for (let i = 0; i < particleCount; i++) {
-                    const offset = i * 0.1;
-                    particleSizes[i] = sizes[i] * (1 + Math.sin(time * 2 + offset) * 0.3);
-                }
-                particles.geometry.attributes.size.needsUpdate = true;
+        animate();
 
-                renderer.render(scene, camera);
-            }
-
-            animate();
-
-            // Handle resize
-            window.addEventListener('resize', function() {
-                const newSize = Math.min(container.clientWidth, container.clientHeight);
-                canvas.width = newSize * 2;
-                canvas.height = newSize * 2;
-                canvas.style.width = newSize + 'px';
-                canvas.style.height = newSize + 'px';
-                renderer.setSize(newSize * 2, newSize * 2);
-            });
-        })();
+        // Handle resize
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
 </html>
