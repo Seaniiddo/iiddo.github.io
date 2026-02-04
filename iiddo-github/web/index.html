@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iiddo - Your AI Companion for Mental Wellness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #FF6B35;
+            --primary-blue: #4ECDC4;
+            --soft-cream: #FFF9F0;
+            --warm-pink: #FF8E8E;
+            --calm-lavender: #A8A4FF;
+            --text-dark: #2D3436;
+            --text-light: #636E72;
+            --white: #FFFFFF;
+            --shadow: 0 10px 40px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.12);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--soft-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.75rem 5%;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,107,53,0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: linear-gradient(135deg, rgba(78,205,196,0.15), rgba(255,107,53,0.1));
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,107,53,0.1);
+            color: var(--primary-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease 0.6s backwards;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,107,53,0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--text-dark);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: var(--white);
+            border-radius: 40px;
+            box-shadow: var(--shadow-hover);
+            padding: 15px;
+            animation: fadeInRight 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--soft-cream) 0%, var(--white) 100%);
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-bubble {
+            position: absolute;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            max-width: 200px;
+            font-size: 0.9rem;
+            animation: chatFloat 3s ease-in-out infinite;
+        }
+
+        .chat-bubble-1 {
+            background: var(--primary-orange);
+            color: var(--white);
+            top: 80px;
+            right: -80px;
+            animation-delay: 0s;
+        }
+
+        .chat-bubble-2 {
+            background: var(--primary-blue);
+            color: var(--white);
+            top: 180px;
+            left: -100px;
+            animation-delay: 1s;
+        }
+
+        .chat-bubble-3 {
+            background: var(--calm-lavender);
+            color: var(--white);
+            top: 300px;
+            right: -60px;
+            animation-delay: 2s;
+        }
+
+        @keyframes chatFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--soft-cream);
+            padding: 2rem;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--warm-pink));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon.orange { background: rgba(255,107,53,0.15); }
+        .feature-icon.blue { background: rgba(78,205,196,0.15); }
+        .feature-icon.pink { background: rgba(255,142,142,0.15); }
+        .feature-icon.purple { background: rgba(168,164,255,0.15); }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* Age Sections */
+        .age-section {
+            padding: 6rem 5%;
+        }
+
+        .age-section:nth-child(even) {
+            background: var(--white);
+        }
+
+        .age-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .age-container.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .age-content {
+            flex: 1;
+        }
+
+        .age-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .age-badge.kids { background: rgba(255,107,53,0.15); color: var(--primary-orange); }
+        .age-badge.teens { background: rgba(168,164,255,0.15); color: var(--calm-lavender); }
+
+        .age-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .age-content p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .feature-list .check {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .age-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .age-illustration {
+            width: 400px;
+            height: 350px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kids-visual {
+            background: linear-gradient(135deg, #FFE5D9 0%, #FFF0E5 100%);
+        }
+
+        .teens-visual {
+            background: linear-gradient(135deg, #E8E4FF 0%, #F0E8FF 100%);
+        }
+
+        .illustration-character {
+            font-size: 8rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(2) { top: 20%; left: 10%; animation-delay: 0.5s; }
+        .floating-element:nth-child(3) { top: 60%; right: 10%; animation-delay: 1s; }
+        .floating-element:nth-child(4) { bottom: 20%; left: 20%; animation-delay: 1.5s; }
+
+        /* Safety Section */
+        .safety {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(168,164,255,0.05));
+        }
+
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .safety-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .safety-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .safety-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .safety-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .safety-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 4rem 5%;
+            background: var(--white);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--primary-orange), var(--warm-pink));
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta .btn-primary {
+            background: var(--white);
+            color: var(--primary-orange);
+        }
+
+        .cta .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border-color: var(--white);
+        }
+
+        .cta .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary-orange);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 5% 2rem;
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-brand .logo {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: #B2BEC3;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #B2BEC3;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: #B2BEC3;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                margin-top: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .age-container {
+                flex-direction: column !important;
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 968px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">iiddo</div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#for-kids">For Kids</a></li>
+            <li><a href="#for-teens">For Teens</a></li>
+            <li><a href="#safety">Safety</a></li>
+            <li><a href="#parents">Parents</a></li>
+        </ul>
+        <a href="#get-started" class="nav-cta">Get Started Free</a>
+        <div class="mobile-menu-btn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>✨</span> The #1 AI Companion for Young Minds
+            </div>
+            <h1>Every Child Deserves to Be <span>Heard</span></h1>
+            <p>Iiddo is the AI-powered mental wellness companion designed exclusively for ages 8-16. Available 24/7, always ready to listen, understand, and support.</p>
+            <div class="hero-buttons">
+                <a href="#get-started" class="btn-primary">
+                    Start Your Journey
+                    <span>→</span>
+                </a>
+                <a href="#how-it-works" class="btn-secondary">How It Works</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <div style="padding: 2rem 1.5rem; text-align: center;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">💙</div>
+                        <p style="font-size: 1.1rem; color: var(--text-light);">Hey there! I'm here for you. What's on your mind today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-bubble chat-bubble-1">You always understand me! 💕</div>
+            <div class="chat-bubble chat-bubble-2">I feel so much better now 😊</div>
+            <div class="chat-bubble chat-bubble-3">Thanks for listening! ✨</div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item fade-in">
+                <h3>24/7</h3>
+                <p>Always Available</p>
+            </div>
+            <div class="stat-item fade-in">
+                <h3>50K+</h3>
+                <p>Conversations Supported</p>
+            </div>
+            <div class="stat-item fade-in">
+                <h3>98%</h3>
+                <p>User Satisfaction</p>
+            </div>
+            <div class="stat-item fade-in">
+                <h3>100%</h3>
+                <p>Privacy Protected</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header fade-in">
+            <h2>Why Choose Iiddo?</h2>
+            <p>Built specifically for young minds, with safety, empathy, and growth at the heart of everything we do.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon orange">🗣️</div>
+                <h3>Always-On AI Companion</h3>
+                <p>Our intelligent AI listens without judgment, offers empathy, and provides guidance whenever your child needs it.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon blue">🎮</div>
+                <h3>Gamified Learning</h3>
+                <p>Engaging activities, rewards, and interactive stories that make emotional learning fun and accessible.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon pink">🛡️</div>
+                <h3>Advanced Safety Net</h3>
+                <p>Real-time crisis detection with immediate professional intervention protocols for when it's needed most.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon purple">👨‍👩‍👧</div>
+                <h3>Parent Dashboard</h3>
+                <p>Empower parents with insights, resources, and tools to support their child's emotional development.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon orange">📊</div>
+                <h3>Progress Tracking</h3>
+                <p>Visualize emotional growth over time with intuitive charts and personalized insights.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon blue">🌍</div>
+                <h3>Multilingual Support</h3>
+                <p>Breaking language barriers with support for multiple languages, starting with English and Chinese.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Kids Section -->
+    <section class="age-section" id="for-kids">
+        <div class="age-container">
+            <div class="age-content fade-in">
+                <span class="age-badge kids">Ages 8-12</span>
+                <h2>A Safe Space for Little Hearts</h2>
+                <p>Our younger users deserve a space that's fun, safe, and easy to understand. Iiddo creates magical conversations that feel like chatting with a wise friend.</p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Simple, friendly language they can relate to</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Fun characters and interactive stories</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Games that teach emotional intelligence</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>No scary topics - just gentle guidance</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Parental controls for peace of mind</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="age-visual fade-in">
+                <div class="age-illustration kids-visual">
+                    <div class="illustration-character">🎈</div>
+                    <div class="floating-element">⭐</div>
+                    <div class="floating-element">🌈</div>
+                    <div class="floating-element">🎨</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Teens Section -->
+    <section class="age-section" id="for-teens">
+        <div class="age-container reverse">
+            <div class="age-content fade-in">
+                <span class="age-badge teens">Ages 12-16</span>
+                <h2>Your Judgment-Free Zone</h2>
+                <p>Teenagers need a space that respects their privacy and treats them as the capable individuals they are. Iiddo is the non-judgmental confidant they deserve.</p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Private and confidential conversations</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Real talk about school, friends, and family</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Practical coping strategies that work</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Help with anxiety, stress, and relationships</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Career and self-discovery guidance</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="age-visual fade-in">
+                <div class="age-illustration teens-visual">
+                    <div class="illustration-character">🌙</div>
+                    <div class="floating-element">🎧</div>
+                    <div class="floating-element">📱</div>
+                    <div class="floating-element">✨</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Section -->
+    <section class="safety" id="safety">
+        <div class="section-header fade-in">
+            <h2>Safety Is Our Foundation</h2>
+            <p>We go above and beyond to ensure every interaction is safe, secure, and supportive.</p>
+        </div>
+        <div class="safety-grid">
+            <div class="safety-card fade-in">
+                <div class="safety-icon">🛡️</div>
+                <h3>Crisis Detection</h3>
+                <p>Advanced AI detects signs of distress and immediately connects users with professional help resources.</p>
+            </div>
+            <div class="safety-card fade-in">
+                <div class="safety-icon">🔒</div>
+                <h3>Data Privacy</h3>
+                <p>Enterprise-grade encryption and strict data policies. We never sell or share personal information.</p>
+            </div>
+            <div class="safety-card fade-in">
+                <div class="safety-icon">👨‍👩‍👧</div>
+                <h3>Parent Controls</h3>
+                <p>Granular privacy settings allow parents to customize the experience while respecting their child's autonomy.</p>
+            </div>
+            <div class="safety-card fade-in">
+                <div class="safety-icon">✅</div>
+                <h3>Human Oversight</h3>
+                <p>Regular content reviews by child psychology experts ensure our AI always provides age-appropriate guidance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parents Section -->
+    <section class="age-section" id="parents">
+        <div class="age-container">
+            <div class="age-content fade-in">
+                <span class="age-badge kids">For Parents</span>
+                <h2>Be Part of Their Journey</h2>
+                <p>Parenting in the digital age is challenging. Iiddo empowers you with tools, resources, and insights to support your child's mental wellness.</p>
+                <ul class="feature-list">
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Dashboard showing emotional trends (with child's consent)</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Expert resources on adolescent development</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Conversation starters and family activities</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Access to professional counseling referrals</span>
+                    </li>
+                    <li>
+                        <span class="check">✓</span>
+                        <span>Community support from other parents</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="age-visual fade-in">
+                <div class="age-illustration kids-visual" style="background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);">
+                    <div class="illustration-character">👨‍👩‍👧‍👦</div>
+                    <div class="floating-element">💚</div>
+                    <div class="floating-element">🤝</div>
+                    <div class="floating-element">📚</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="get-started">
+        <h2>Ready to Start the Conversation?</h2>
+        <p>Join thousands of families who have found a trusted companion for their children's mental wellness journey.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn-primary">Get Started Free</a>
+            <a href="#" class="btn-secondary">Learn More</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">iiddo</div>
+                <p>The AI-powered mental wellness companion for young minds. Because every child deserves to be heard.</p>
+                <div class="social-links">
+                    <a href="#" title="Twitter">𝕏</a>
+                    <a href="#" title="GitHub">⌘</a>
+                    <a href="#" title="LinkedIn">in</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#">For Kids</a></li>
+                    <li><a href="#">For Teens</a></li>
+                    <li><a href="#">For Parents</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Our Mission</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Safety Guide</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Iiddo. All rights reserved. | <a href="#" style="color: #B2BEC3;">Privacy Policy</a> | <a href="#" style="color: #B2BEC3;">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.background = 'white';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.padding = '1rem';
+            navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+        }
+    </script>
+</body>
+</html>
